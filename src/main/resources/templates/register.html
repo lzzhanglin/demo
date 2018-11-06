@@ -11,20 +11,36 @@
 <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
+<!--<script type="text/javascript"  src="../static/js/jquery.js"></script>-->
+
+<!--<script type="text/javascript" src="../static/js/jquery.validate.min.js" th:inline="javascript"></script>-->
+<!--<script type="text/javascript" src="../static/js/messages_zh.js" th:inline="javascript"></script>-->
+<script type="text/javascript" src="../static/js/register.js" th:inline="javascript"></script>
+
+
+
 <body>
-<div class="loginDiv">
+<div class="registerDiv">
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
-            <form id="loginForm" class="form-horizontal" action="/registerPost" method="post" >
+            <form id="registerForm" class="form-horizontal" action="/registerPost" method="post" >
                 <span class="heading">用户注册</span>
                 <div class="form-group">
                     <input  class="form-control" name="username" id="username" placeholder="用户名">
                     <i class="fa fa-user"></i>
                 </div>
+
+
                 <div class="form-group">
                     <input  class="form-control" type="email" name="email" id="email" placeholder="电子邮箱">
                     <i class="fa fa-user"></i>
+
                 </div>
+
                 <div class="form-group help">
                     <input type="password" class="form-control" name="password" id="password" placeholder="密　码">
                     <i class="fa fa-lock"></i>
@@ -35,6 +51,16 @@
                     <i class="fa fa-lock"></i>
                     <a href="#" class="fa fa-question-circle"></a>
                 </div>
+                <div>
+                    <span id="tipUsername" style="color:red; "></span>
+
+                    <span id="tipEmail" style="color:red; "></span>
+
+                    <span id="passwordTip" style="color:red; "></span>
+
+
+                </div>
+
 
                 <div class="form-group">
 
@@ -48,4 +74,4 @@
 <!--<p id="user"></p>-->
 </body>
 </html>
-<!--<script type="text/javascript" src="../static/js/login.js"></script>-->
+

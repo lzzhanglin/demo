@@ -1,6 +1,6 @@
 package com.spring.demo.service.serviceImpl;
 
-import com.spring.demo.service.LoginAndRegisterService;
+import com.spring.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
-
 @Component
+@Service("userDetailService")
 public class MyUserDetailService implements UserDetailsService  {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -25,14 +26,14 @@ public class MyUserDetailService implements UserDetailsService  {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    LoginAndRegisterService loginAndRegisterService;
+    UserService userService;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         logger.info("执行MyUserDetailService");
 
         logger.info("用户名为：{}",username);
-        String password = loginAndRegisterService.getPasswordByUsername(username);
+        String password = userService.getPasswordByUsername(username);
 //        String password = passwordEncoder.encode("111");
         logger.info("密码为：{}", password);
         String passwordInput = passwordEncoder.encode("222");

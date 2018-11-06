@@ -3,44 +3,36 @@ package com.spring.demo.controller;
 
 import com.spring.demo.entity.Resp;
 import com.spring.demo.entity.User;
-import com.spring.demo.security.MyPasswordEncoder;
 import com.spring.demo.security.SecurityProperties;
-import com.spring.demo.service.LoginAndRegisterService;
+import com.spring.demo.service.UserService;
 import com.spring.demo.service.serviceImpl.MyUserDetailService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import javax.sql.DataSource;
 import java.util.Objects;
 
 @Controller
@@ -61,8 +53,7 @@ public class LoginController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private LoginAndRegisterService loginAndRegisterService;
-
+    private UserService userService;
 
     @RequestMapping("/")
     public String toWelcome() {
@@ -99,23 +90,68 @@ public class LoginController {
 //        binder.addValidators(user);
 //    }
     @RequestMapping(value = "/registerPost", method = RequestMethod.POST)
-    @ResponseBody
-    public Resp registerPost(HttpServletRequest request) {
+//    @ResponseBody
+    public String registerPost(HttpServletRequest request) {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
+//后台对前台传来的参数进行验证
+        boolean haveUsername = userService.isExistUsername(username);
+        if (haveUsername) {
+            Resp resp = new Resp("failed", "用户名已存在");
+            request.setAttribute("resp",resp);
+            return "/register";
+        }
+
+        boolean haveEmail = userService.isExistUsername(email);
+        if (haveEmail) {
+            Resp resp = new Resp("failed", "邮箱已被占用");
+            request.setAttribute("resp",resp);
+            return "/register";
+        }
         String password = request.getParameter("password");
         String passwordR = request.getParameter("passwordR");
         if (!password.equals(passwordR)) {
-            return new Resp("failed", "两次输入的密码不一致");
+            Resp resp = new Resp("failed", "两次输入的密码不一致");
+            request.setAttribute("resp",resp);
+            return "/register";
         }
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-        loginAndRegisterService.register(user);
+        userService.register(user);
+        Resp resp = new Resp("success", "register success");
+        return ("/login");
 
-        return new Resp("success", "register success");
+    }
 
+
+    @RequestMapping(value = "/isExistUsername" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Resp isExistUsername(String  username) {
+//        String username = request.getParameter("username");
+        if (Objects.equals(null,username)) {
+            return new Resp("failed", "用户名为空");
+        }
+        logger.info("用户名为：{}",username);
+        boolean isExist = userService.isExistUsername(username);
+        if (isExist) {
+            return new Resp("failed", "username is exist");
+        } else return new Resp("success", "username is not be used");
+    }
+
+    @RequestMapping(value = "/isExistEmail" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Resp isExistEmail(String email) {
+        logger.info("邮箱为：{}",email);
+//        String email = request.getParameter("email");
+        if (Objects.equals(null,email)) {
+            return new Resp("failed", "邮箱为空");
+        }
+        boolean isExist = userService.isExistEmail(email);
+        if (isExist) {
+            return new Resp("failed", "email is exist");
+        } else return new Resp("success", "email is not be used");
     }
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)
@@ -125,6 +161,13 @@ public class LoginController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+    }
+
+    @GetMapping("/me")
+    @ResponseBody
+    public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
+//        return SecurityContextHolder.getContext().getAuthentication();
+        return user;
     }
 
 
@@ -138,8 +181,24 @@ public class LoginController {
     class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         private Logger logger = LoggerFactory.getLogger(this.getClass());
         public final static String SESSION_KEY = "user";
+
+        @Autowired
+        private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+        @Autowired
+        private AuthenticationFailureHandler myAuthenticationFailureHandler;
+
         @Autowired
         private SecurityProperties securityProperties;
+
+        @Autowired
+        private DataSource dataSource;
+
+        @Autowired
+        private UserDetailsService userDetailsService;
+
+
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             logger.info("属性是：{}",securityProperties.getBrowser().getLoginPage());
@@ -150,8 +209,13 @@ public class LoginController {
                             securityProperties.getBrowser().getLoginPage(),
                             "/welcome",
                             "/register",
+                            "/isExistUsername",
+                            "/isExistEmail",
                             "/registerPost",
-                            "/**/*.js").permitAll()
+                            "/**/*.js",
+                            "/static/js/jquery.js",
+                            "/static/messages_zh.js",
+                            "/static/js/jquery.validate.min.js").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
@@ -159,10 +223,17 @@ public class LoginController {
 
                     .loginPage("/login")
                     .loginProcessingUrl("/loginPost")
+                    .successHandler(myAuthenticationSuccessHandler)
+                    .failureHandler(myAuthenticationFailureHandler)
                     .permitAll()
                     .failureUrl("/login?error=true")
                     .usernameParameter("username")
                     .passwordParameter("password")
+                    .and()
+                    .rememberMe()
+                    .tokenRepository(persistentTokenRepository())
+                    .tokenValiditySeconds(600)
+                    .userDetailsService(userDetailsService())
                     .and()
                     .logout()
                     .logoutUrl("/logout")
@@ -177,7 +248,13 @@ public class LoginController {
             return new BCryptPasswordEncoder();
         }
 
-
+        @Bean
+        public PersistentTokenRepository persistentTokenRepository() {
+            JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+            tokenRepository.setDataSource(dataSource);
+//            tokenRepository.setCreateTableOnStartup(true);
+            return tokenRepository;
+        }
 
     }
 

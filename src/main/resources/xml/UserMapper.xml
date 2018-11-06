@@ -9,7 +9,17 @@
 
     <insert id="register" parameterType="com.spring.demo.entity.User"
             useGeneratedKeys="true" keyProperty="id">
-        insert into user (username, email,password)
-        values (#{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+        insert into user (username, email,password,role)
+        values (#{username,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR},
+                #{role,jdbcType=VARCHAR})
     </insert>
+    <select id="isExistUsername" parameterType="string" resultType="int">
+        select count(username) from user where username = #{username}
+    </select>
+
+    <select id="isExistEmail" parameterType="string" resultType="int">
+        select count(email) from user where email = #{email}
+    </select>
 </mapper>
