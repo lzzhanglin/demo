@@ -1,0 +1,79 @@
+body{
+    padding-left:10px;
+    padding-right: 10px;
+}
+
+.btn {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+/*.navbar-default {*/
+    /*background-color: #43c6f1;*/
+    /*border-color: #18719e;*/
+/*}*/
+/*.navbar-default .navbar-brand {*/
+    /*color: #ecf0f1;*/
+/*}*/
+/*.navbar-default .navbar-brand:hover,*/
+/*.navbar-default .navbar-brand:focus {*/
+    /*color: #3d8b5a;*/
+/*}*/
+/*.navbar-default .navbar-text {*/
+    /*color: #ecf0f1;*/
+/*}*/
+/*.navbar-default .navbar-nav > li > a {*/
+    /*color: #ecf0f1;*/
+/*}*/
+/*.navbar-default .navbar-nav > li > a:hover,*/
+/*.navbar-default .navbar-nav > li > a:focus {*/
+    /*color: #3d8b5a;*/
+/*}*/
+/*.navbar-default .navbar-nav > .active > a,*/
+/*.navbar-default .navbar-nav > .active > a:hover,*/
+/*.navbar-default .navbar-nav > .active > a:focus {*/
+    /*color: #3d8b5a;*/
+    /*background-color: #18719e;*/
+/*}*/
+/*.navbar-default .navbar-nav > .open > a,*/
+/*.navbar-default .navbar-nav > .open > a:hover,*/
+/*.navbar-default .navbar-nav > .open > a:focus {*/
+    /*color: #3d8b5a;*/
+    /*background-color: #18719e;*/
+/*}*/
+/*.navbar-default .navbar-toggle {*/
+    /*border-color: #18719e;*/
+/*}*/
+/*.navbar-default .navbar-toggle:hover,*/
+/*.navbar-default .navbar-toggle:focus {*/
+    /*background-color: #18719e;*/
+/*}*/
+/*.navbar-default .navbar-toggle .icon-bar {*/
+    /*background-color: #ecf0f1;*/
+/*}*/
+/*.navbar-default .navbar-collapse,*/
+/*.navbar-default .navbar-form {*/
+    /*border-color: #ecf0f1;*/
+/*}*/
+/*.navbar-default .navbar-link {*/
+    /*color: #ecf0f1;*/
+/*}*/
+/*.navbar-default .navbar-link:hover {*/
+    /*color: #3d8b5a;*/
+/*}*/
+
+/*@media (max-width: 767px) {*/
+    /*.navbar-default .navbar-nav .open .dropdown-menu > li > a {*/
+        /*color: #ecf0f1;*/
+    /*}*/
+    /*.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,*/
+    /*.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {*/
+        /*color: #3d8b5a;*/
+    /*}*/
+    /*.navbar-default .navbar-nav .open .dropdown-menu > .active > a,*/
+    /*.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,*/
+    /*.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {*/
+        /*color: #3d8b5a;*/
+        /*background-color: #18719e;*/
+    /*}*/
+/*}*/

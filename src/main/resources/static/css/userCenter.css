@@ -1,0 +1,10 @@
+body{
+    padding-left:10px;
+    padding-right: 10px;
+}
+
+.btn {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}

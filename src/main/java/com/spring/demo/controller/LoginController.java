@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -163,12 +164,12 @@ public class LoginController {
         return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
-    @GetMapping("/me")
-    @ResponseBody
-    public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
-//        return SecurityContextHolder.getContext().getAuthentication();
-        return user;
-    }
+//    @GetMapping("/me")
+//    @ResponseBody
+//    public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
+////        return SecurityContextHolder.getContext().getAuthentication();
+//        return user;
+//    }
 
 
 
@@ -178,6 +179,7 @@ public class LoginController {
 
     @EnableWebSecurity
     @Order(Ordered.HIGHEST_PRECEDENCE)
+    @ComponentScan({"com.spring.demo.service.serviceImpl"})
     class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         private Logger logger = LoggerFactory.getLogger(this.getClass());
         public final static String SESSION_KEY = "user";
@@ -223,16 +225,17 @@ public class LoginController {
 
                     .loginPage("/login")
                     .loginProcessingUrl("/loginPost")
-                    .successHandler(myAuthenticationSuccessHandler)
-                    .failureHandler(myAuthenticationFailureHandler)
+//                    .successHandler(myAuthenticationSuccessHandler)
+//                    .failureHandler(myAuthenticationFailureHandler)
                     .permitAll()
                     .failureUrl("/login?error=true")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .and()
                     .rememberMe()
+                    .rememberMeParameter("remember-me")
                     .tokenRepository(persistentTokenRepository())
-                    .tokenValiditySeconds(600)
+                    .tokenValiditySeconds(3600)
                     .userDetailsService(userDetailsService())
                     .and()
                     .logout()
