@@ -8,6 +8,13 @@ body{
     -moz-border-radius: 20px;
     border-radius: 20px;
 }
+page-helper{
+    width:100px;
+    margin:0 auto;
+}
+#footer{
+    margin-top: 190px;
+}
 /*.navbar-default {*/
     /*background-color: #43c6f1;*/
     /*border-color: #18719e;*/

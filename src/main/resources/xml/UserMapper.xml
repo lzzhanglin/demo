@@ -22,4 +22,26 @@
     <select id="isExistEmail" parameterType="string" resultType="int">
         select count(email) from user where email = #{email}
     </select>
+
+    <update id="saveUserProfile" parameterType="com.spring.demo.entity.User">
+        update user
+        set nickname = #{nickname},
+            birthday = #{birthday},
+            phone = #{phone},
+            home_addr = #{homeAddr},
+            school = #{school},
+            `describe` = #{describe}
+        where username = #{username}
+    </update>
+    <select id="queryUserProfile" resultType="com.spring.demo.entity.User" parameterType="string">
+        select username,
+               nickname,
+               phone,
+               home_addr homeAddr,
+               birthday,
+               school,
+               `describe`
+        from user
+        where username = #{username}
+    </select>
 </mapper>

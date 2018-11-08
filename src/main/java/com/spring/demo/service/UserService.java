@@ -11,4 +11,10 @@ public interface UserService {
 
     public boolean isExistEmail(String username);
 
+
+    public boolean saveUserProfile(User user);
+
+    public User queryUserProfile(String username);
+
+
 }

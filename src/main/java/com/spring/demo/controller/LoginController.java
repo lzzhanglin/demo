@@ -216,6 +216,7 @@ public class LoginController {
                             "/registerPost",
                             "/**/*.js",
                             "/static/js/jquery.js",
+                            "/static/js/bootstrap-datetimepicker.min.js",
                             "/static/messages_zh.js",
                             "/static/js/jquery.validate.min.js").permitAll()
                     .anyRequest().authenticated()

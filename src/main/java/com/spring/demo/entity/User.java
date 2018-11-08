@@ -20,6 +20,20 @@ public class User implements UserDetails, Serializable {
 
     private String role;
 
+    private String nickname;
+
+    private String birthday;
+
+    private String phone;
+
+    private String homeAddr;
+
+    private String school;
+
+    private String tag;
+
+    private String describe;
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -82,6 +96,63 @@ public class User implements UserDetails, Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getHomeAddr() {
+        return homeAddr;
+    }
+
+    public void setHomeAddr(String homeAddr) {
+        this.homeAddr = homeAddr;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     @Override

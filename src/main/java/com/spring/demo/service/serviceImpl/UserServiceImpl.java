@@ -39,4 +39,18 @@ public class UserServiceImpl implements UserService {
             return true;
         }
     }
+
+    public boolean saveUserProfile(User user) {
+        int resultRow = userMapper.saveUserProfile(user);
+        if (resultRow == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public User queryUserProfile(String username) {
+        User user = userMapper.queryUserProfile(username);
+        return user;
+    }
 }

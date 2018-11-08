@@ -11,4 +11,8 @@ public interface UserMapper {
     public int isExistUsername(String username);
 
     public int isExistEmail(String email);
+
+    public int saveUserProfile(User user);
+
+    public User queryUserProfile(String username);
 }
