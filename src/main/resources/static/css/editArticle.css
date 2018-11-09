@@ -1,0 +1,27 @@
+body{
+    padding-left:100px;
+    padding-right: 10px;
+}
+
+.btn-group{
+    margin-top: 30px;
+    margin-right: 40px;
+    margin-bottom: 30px;
+}
+
+#footer{
+    margin-top: 170px;
+}
+
+:focus{
+    outline: 0;
+}
+.btn:focus,
+.btn:active:focus,
+.btn:active:focus,
+.btn:focus,
+.btn:active:focus,
+.btn:active:focus{
+    outline: none;
+}
+/*#editor {overflow:scroll; max-height:300px}*/

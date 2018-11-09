@@ -44,4 +44,9 @@
         from user
         where username = #{username}
     </select>
+    <select id="getUserIdByName" parameterType="string" resultType="long">
+        select id
+        from user
+        where username = #{username}
+    </select>
 </mapper>

@@ -15,4 +15,6 @@ public interface UserMapper {
     public int saveUserProfile(User user);
 
     public User queryUserProfile(String username);
+
+    public Long getUserIdByName(String username);
 }

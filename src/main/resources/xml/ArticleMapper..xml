@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace = "com.spring.demo.mapper.ArticleMapper">
+    <insert id="saveArticle"  parameterType="com.spring.demo.entity.Article"
+                useGeneratedKeys="true" keyProperty="articleId">
+            insert into article (title, content,user_id)
+            values (#{title,jdbcType=VARCHAR},
+                    #{content,jdbcType=VARCHAR},
+                    #{userId,jdbcType=BIGINT})
+    </insert>
+
+    <update id="updateArticle" parameterType="com.spring.demo.entity.Article"
+    useGeneratedKeys="true" keyProperty="articleId">
+        update article
+        set title = #{title},
+            content = #{content}
+        where id = #{articleId}
+    </update>
+
+    <select id="getArticleList" resultType="com.spring.demo.entity.Article" parameterType="long">
+        select user_id,
+               title,
+               create_time
+            from article
+        where user_id = #{userId}
+    </select>
+</mapper>

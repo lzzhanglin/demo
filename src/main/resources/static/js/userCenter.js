@@ -55,18 +55,17 @@ $("#saveProfileBtn").click(function () {
         // contentType: "application/json;charset=utf-8",
         success: function (data) {
             if (data.status == "failed") {
-                swal(
-                    '保存失败！',
-                    'error'
-
-                );
+                swal({title: '保存失败！',
+                    type:"error",
+                    timer:1000,
+                    showConfirmButton:false});
 
                 console.log("save failed")
             } else {
-                swal(
-                    '保存成功！'
-
-                );
+                swal({title: '保存成功！',
+                    type:"success",
+                    timer:1000,
+                    showConfirmButton:false});
                 $("#nickname").attr("readonly","readonly");
                 $("#phone").attr("readonly","readonly");
                 $("#birthday").attr("readonly","readonly");
@@ -74,7 +73,6 @@ $("#saveProfileBtn").click(function () {
                 $("#school").attr("readonly","readonly");
                 $("#tag").attr("readonly","readonly");
                 $("#describe").attr("readonly","readonly");
-                console.log("save success");
 
             }
         }

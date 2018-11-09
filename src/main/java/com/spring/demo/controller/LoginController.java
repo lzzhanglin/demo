@@ -209,6 +209,7 @@ public class LoginController {
                     .antMatchers("/webjars/**", "/resources/**",
                             "/**/*.css",
                             securityProperties.getBrowser().getLoginPage(),
+                    "/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js",
                             "/welcome",
                             "/register",
                             "/isExistUsername",
