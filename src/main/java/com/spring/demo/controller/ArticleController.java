@@ -41,7 +41,7 @@ public class ArticleController {
         }
 
         //articleId无值 则跳转该文章的新建页面
-        if (Objects.equals(null, articleId) || Objects.equals("", articleId)) {
+        if (Objects.equals(0l, articleId) ) {
             Long userId = userMapper.getUserIdByName(username);
             request.setAttribute("title", null);
             request.setAttribute("content", null);
