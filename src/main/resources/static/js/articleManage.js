@@ -2,27 +2,46 @@ $('#table').bootstrapTable(
     {
     cache: false,
     method: 'post',
+        sortable: false,
     pageList: [10,15,20,30,50],
     pagination: true,
     sidePagination: 'server',
-    //sidePagination: 'client',
+        sortOrder:'userId',
+
+        //sidePagination: 'client',
     //  queryParamsType: queryParams,
-    queryParams :$("#userId").val(),
+    // queryParams :$("#userId").val(),
+        queryParams: function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                // limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                pageSize:10,
+                pageNumber:1,
+                userId:$("#userId").val(),
+                length: 6,
+                order:'desc'
+            };
+            return temp;
+
+        },
     //queryParamsType: 'limit',
     striped : true,
-    pageNumber:1,
-    pageSize:15,
+    // pageNumber:1,
+    // pageSize:15,
     //pageSize:9999,
     //limit:20,
-    idField:"id",
+    // idField:"userId",
     search: true,
-    undefinedText:"",
+    // undefinedText:"",
     showRefresh: true,
     url: '/article/getArticleList',
     columns: [
         {   field:'userId',
             title:'用户id',
-            visible:true,
+            align:'center',
+            showSelectTitle:true,
+
+            // visible:false,
             /*               formatter:function(value,row,index){
                               //通过formatter可以自定义列显示的内容
                               //value：当前field的值，即id
@@ -33,24 +52,202 @@ $('#table').bootstrapTable(
         }, {
             field:'title',
             title:'标题',
-            visible:true,
+            align:'center',
+            formatter:function (value, row, index) {
+                value='<a href="/article/edit?id='+row.articleId+'"'+">"+value+"</a>";
+                return value;
+                // return [
+                //     '<a href="/article/edit?articleId='+'+row.articleId+'+"></a>'
+                // ].join("")
+                },
+
+
+                visible:true,
         },  {
             field:'createTime',
             title:'发表时间',
             visible:true,
-        }
-        /*       {
+            align:'center',
+        },
+              {
                  field: 'operation',
                  title: '操作',
+                  align:'center',
                  formatter : function(cell, row, index) {
-                     btnEdit = '<a class="btn-warning btn-sm"   href="/testPlan/editSkip?id='+row.id+'">编辑</a>';
-                     btnDetail = '<a class="btn-primary btn-sm"   href="/testPlan/getRecordById?id='+row.id+'">查看</a>';
-                     btnDel = '<button type="button" class="btn btn-danger btn-xs" onclick="deleteCase('+row.id+')">删除</button>';
-                     btnStatistics= '<a class="btn-primary btn-sm" href="/testPlan/getTestPlanReport?id='+row.id+'">结果统计</a>';
-                     btnCaseAssociation= '<button type="button" class="btn-success  btn-xs" onclick="caseAssociation('+row.id+')">关联用例</button>';
-                     cell =btnEdit+btnDetail+btnDel+btnCaseAssociation+btnStatistics;
+                     btnEdit = '<a class="btn-success btn-sm"  onclick="viewArticle('+row.articleId+')">查看</a>';
+                     btnView = '<a class="btn-primary btn-sm"  onclick="editArticle('+row.articleId+')">编辑</a>';
+                     btnDel = '<button type="button" class="btn btn-danger btn-xs" onclick="deleteArticle('+row.articleId+')">删除</button>';
+                     cell = btnEdit +" "+ btnView +" "+ btnDel;
                      return cell;
                  },
-             } */],
+             }],
 });
-console.log("hello");
+
+
+function viewArticle(articleId) {
+    var data = {};
+    data.articleId = articleId;
+    $.ajax({
+        type: "POST",
+        url: "/article/view",
+        // async:false,
+        data: data,
+
+        //type、contentType必填,指明传参方式
+        dataType: "json",
+
+        // contentType: "application/x-www-form-urlencoded",
+        // contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            $("#title").val(data.title);
+            $("#content").val(data.content);
+            $("#updateArticleBtn").hide();
+            $("#title").attr("readonly", "readonly");
+            $("#content").attr("readonly", "readonly");
+        }
+    });
+    $('#con-close-modal').modal('show');
+    
+}
+
+
+function editArticle(articleId) {
+    var data = {};
+    data.articleId = articleId;
+    $.ajax({
+        type: "POST",
+        url: "/article/view",
+        async:false,
+        data: data,
+
+        //type、contentType必填,指明传参方式
+        dataType: "json",
+
+        // contentType: "application/x-www-form-urlencoded",
+        // contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            $("#title").val(data.title);
+            $("#content").val(data.content);
+        }
+    });
+    $('#con-close-modal').modal('show');
+    $("#updateArticleBtn").click(function () {
+
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var article = {};
+        article.articleId = articleId;
+        console.log(article);
+        article.title = title;
+        article.content = content;
+        $.ajax({
+            type: "POST",
+            url: "/article/update",
+            // async:false,
+            data: article,
+
+            //type、contentType必填,指明传参方式
+            dataType: "json",
+
+            // contentType: "application/x-www-form-urlencoded",
+            // contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                if (data.status == "failed") {
+                    swal({title: '保存失败！',
+                        type:"error",
+                        timer:1000,
+                        showConfirmButton:false});
+
+                    console.log("save failed")
+                } else if (data.status == "illegalArgument") {
+                    swal({
+                        title: '标题不能为空！',
+                        type: "error",
+                        timer: 1000,
+                        showConfirmButton: false
+                    });
+                }
+                else{
+                    $("#table").bootstrapTable('refresh',data);
+                    swal({title: '保存成功！',
+                        type:"success",
+                        timer:1000,
+                        showConfirmButton:false});
+
+
+
+                }
+            }
+        });
+    })
+
+}
+
+
+function detailFormatter(index, row) {
+    var html = [];
+    $.each(row, function (key, value) {
+        html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+    });
+    return html.join('');
+}
+function deleteArticle(articleId) {
+    var data = {};
+    data.articleId = articleId;
+    swal({
+        title: '确定删除吗？',
+        text: '你将无法恢复它！',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '确定删除！',
+    }).then(function(isConfirm){
+        console.log(isConfirm);
+        if (isConfirm.dismiss != 'cancel') {
+            $.ajax({
+                type: "POST",
+                url: "/article/delete",
+                // async:false,
+                data: data,
+
+                //type、contentType必填,指明传参方式
+                // dataType: "json",
+
+                contentType: "application/x-www-form-urlencoded",
+                // contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data.status == "failed") {
+                        swal({title: '删除失败！',
+                            type:"error",
+                            timer:1000,
+                            showConfirmButton:false});
+
+                        console.log("save failed")
+                    } else {
+                        $("#table").bootstrapTable('refresh',data);
+                        swal(
+                            '删除！',
+                            '该文章已经被删除。',
+                            'success'
+                        );
+                        // swal({title: '删除成功！',
+                        //     type:"success",
+                        //     timer:1000,
+                        //     showConfirmButton:false});
+
+
+                    }
+                }
+            });
+
+        }
+
+
+    })
+
+
+
+
+    }
+

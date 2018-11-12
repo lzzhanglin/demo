@@ -10,4 +10,8 @@ public interface ArticleMapper {
     public int updateArticle(Article article);
 
     public List<Article> getArticleList(Long userId);
+
+    public int deleteArticle(Long articleId);
+
+    public Article viewArticleById(Long articleId);
 }

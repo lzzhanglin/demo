@@ -1,0 +1,14 @@
+:focus{
+    outline: 0;
+}
+.btn:focus,
+.btn:active:focus,
+.btn:active:focus,
+.btn:focus,
+.btn:active:focus,
+.btn:active:focus{
+    outline: none;
+}
+/*.modal{*/
+    /*margin-top: 120px;*/
+/*}*/

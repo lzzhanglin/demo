@@ -16,6 +16,10 @@
     <script src="../static/js/moment.js" type="text/javascript"></script>
     <script type="text/javascript" src="../static/js/bs-datetimepicker.js"></script>
     <script type="text/javascript" src="../static/js/wangEditor.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.standalone.min.css" />
     <script type="text/javascript" src="https://cdn.bootcss.com/limonte-sweetalert2/7.28.11/sweetalert2.all.js"></script>
@@ -38,8 +42,11 @@
                     <label class="col-sm-1 control-label">标   题:</label>
 
                     <div class="col-sm-10 input-group">
-                        <input type="text" class="form-control" id="title">
+                        <input type="text" class="form-control" id="title" name="title">
                         <input type="hidden" id="userId" th:value="*{userId}">
+                        <input type="hidden" id="titleH" th:value="*{title}">
+                        <input type="hidden" id="contentH" th:value="*{content}">
+                        <input type="hidden" id="articleIdH" th:value="*{articleId}">
                         <input type="hidden" id="articleId">
 
                         <span class="input-group-addon">

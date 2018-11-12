@@ -11,6 +11,9 @@
 
     <script type="text/javascript" src="https://cdn.bootcss.com/limonte-sweetalert2/7.28.11/sweetalert2.all.js"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/limonte-sweetalert2/7.28.11/sweetalert2.css">
+    <!--<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>-->
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel = "stylesheet" href="../static/css/userCenter.css" />
@@ -32,16 +35,16 @@
 
     <div class="row">
     </div>
-    <form id="userProfileForm">
+    <form id="userProfileForm" name="userProfileForm" class="form-horizontal">
 
 
-    <div class="form-horizontal">
+    <!--<div class="form-horizontal">-->
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2 control-label">昵 称:</label>
 
                 <div class="col-sm-7 input-group">
-                    <input type="text" class="form-control" id="nickname" th:value="*{user.nickname}">
+                    <input type="text" class="form-control" name="nickname" id="nickname" th:value="*{user.nickname}">
                     <input type="hidden" id="username" th:value="*{user.username}">
 
                     <span class="input-group-addon">
@@ -50,74 +53,74 @@
                 </div>
             </div>
         </fieldset>
-    </div>
-    <div class="form-horizontal">
+    <!--</div>-->
+    <!--<div class="form-horizontal">-->
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2 control-label">出生日期:</label>
                 <div class="col-sm-7 input-group">
-                    <input type="text" class="form-control date" id="birthday" th:value="*{user.birthday}">
+                    <input type="text" class="form-control date" name="birthday" id="birthday" th:value="*{user.birthday}">
                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                 </div>
             </div>
         </fieldset>
-    </div>
-    <div class="form-horizontal">
+    <!--</div>-->
+    <!--<div class="form-horizontal">-->
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2 control-label">电 话:</label>
                 <div class="col-sm-7 input-group">
-                    <input type="text" class="form-control" id="phone" th:value="*{user.phone}">
+                    <input type="text" class="form-control" name="phone" id="phone" th:value="*{user.phone}">
                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-phone"></span>
                                 </span>
                 </div>
             </div>
         </fieldset>
-    </div>
-    <div class="form-horizontal">
+    <!--</div>-->
+    <!--<div class="form-horizontal">-->
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2 control-label">家乡:</label>
                 <div class="col-sm-7 input-group">
-                    <input type="text" class="form-control" id="homeAddr" th:value="*{user.homeAddr}">
+                    <input type="text" class="form-control" name="homeAddr" id="homeAddr" th:value="*{user.homeAddr}">
                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-home"></span>
                                 </span>
                 </div>
             </div>
         </fieldset>
-    </div>
-    <div class="form-horizontal">
+    <!--</div>-->
+    <!--<div class="form-horizontal">-->
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2 control-label">毕业学校:</label>
                 <div class="col-sm-7 input-group">
-                    <input type="text" class="form-control" id="school" th:value="*{user.school}">
+                    <input type="text" class="form-control" name="school" id="school" th:value="*{user.school}">
                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-education"></span>
                                 </span>
                 </div>
             </div>
         </fieldset>
-    </div>
+    <!--</div>-->
 
 
-    <div class="form-horizontal">
+    <!--<div class="form-horizontal">-->
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2 control-label">描 述:</label>
                 <div class="col-sm-7 input-group">
-                    <input type="text" class="form-control" id="describe" th:value="*{user.describe}">
+                    <input type="text" class="form-control" name="describe" id="describe" th:value="*{user.describe}">
                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-tag"></span>
                                 </span>
                 </div>
             </div>
         </fieldset>
-    </div>
+    <!--</div>-->
     </form>
     <div class="row">
         <div class="col-md-8 col-md-offset-4">

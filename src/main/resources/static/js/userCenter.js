@@ -1,5 +1,59 @@
 $().ready(function(){
 
+    // var validate =
+    //     $("#userProfileForm").validate({
+    //     rules: {
+    //         nickname: {
+    //             required: true,
+    //             number:true
+    //         },
+    //         phone:{
+    //             required: true,
+    //             rangelength: [11]
+    //
+    //         },
+    //         describe: {
+    //             required: true
+    //         },
+    //         homeAddr: {
+    //             required: true
+    //         },
+    //         school: {
+    //             required: true
+    //         },
+    //         birthday: {
+    //             required:true
+    //
+    //         }
+    //     },
+    //     messages: {
+    //         nickname: {
+    //             required: "不能为空"
+    //         },
+    //         homeAddr:{
+    //             required: "不能为空"
+    //         },
+    //         school: {
+    //             required: "不能为空"
+    //         },
+    //
+    //         phone: {
+    //             required: "不能为空",
+    //             rangelength: "电话号码长度必须为{0}位"
+    //         },
+    //         describe: {
+    //             required: "不能为空"
+    //         },
+    //         birthday: {
+    //             required: "不能为空"
+    //         }
+    //     }
+    //
+    //
+    // });
+    // validate.resetForm();
+
+    //
     $("#nickname").attr("readonly","readonly");
     $("#phone").attr("readonly","readonly");
     $("#birthday").attr("readonly","readonly");
@@ -10,11 +64,13 @@ $().ready(function(){
 });
 $('#birthday').datetimepicker({
     // inline: true,
-    // sideBySide: t    rue,
+    // sideBySide: true,
     // locale: 'cn'
     format: 'L'
 
 });
+
+
 $("#editProfileBtn").click(function () {
     $("#nickname").removeAttr("readonly");
     $("#phone").removeAttr("readonly");
@@ -23,8 +79,12 @@ $("#editProfileBtn").click(function () {
     $("#school").removeAttr("readonly");
     $("#tag").removeAttr("readonly");
     $("#describe").removeAttr("readonly");
+
+
 })
 $("#saveProfileBtn").click(function () {
+
+
     var username = $("#username").val();
     var nickname = $("#nickname").val();
     var phone = $("#phone").val();

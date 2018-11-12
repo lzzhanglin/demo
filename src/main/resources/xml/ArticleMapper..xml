@@ -20,10 +20,29 @@
     </update>
 
     <select id="getArticleList" resultType="com.spring.demo.entity.Article" parameterType="long">
-        select user_id,
+        select id articleId,
+               user_id userId,
                title,
-               create_time
+               create_time createTime,
+               content
             from article
         where user_id = #{userId}
+        order by create_time desc
+
+    </select>
+    <delete id="deleteArticle" parameterType="long">
+        delete from article
+        <!--<if test="articleId !='' and articleId !=null">-->
+        where id = #{articleId}
+        <!--</if>-->
+    </delete>
+
+    <select id="viewArticleById" parameterType="long" resultType="com.spring.demo.entity.Article">
+        select title ,
+               content
+            from
+            article
+        where id = #{articleId}
+
     </select>
 </mapper>

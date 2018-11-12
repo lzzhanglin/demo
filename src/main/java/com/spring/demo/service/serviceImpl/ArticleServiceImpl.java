@@ -20,14 +20,22 @@ public class ArticleServiceImpl implements ArticleService {
         return article.getArticleId();
     }
 
-    public Long updateArticle(Article articlea) {
-        articleMapper.updateArticle(articlea);
-        return articlea.getArticleId();
+    public Long updateArticle(Article article) {
+        articleMapper.updateArticle(article);
+        return article.getArticleId();
 
     }
 
     public List<Article> getArticleList(Long userId) {
         List<Article> articleList = articleMapper.getArticleList(userId);
         return articleList;
+    }
+
+    public int deleteArticle(Long articleId) {
+       return articleMapper.deleteArticle(articleId);
+    }
+
+    public Article viewArticleById(Long articleId) {
+        return articleMapper.viewArticleById(articleId);
     }
 }
