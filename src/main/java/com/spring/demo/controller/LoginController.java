@@ -1,9 +1,14 @@
 package com.spring.demo.controller;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.spring.demo.entity.Article;
 import com.spring.demo.entity.Resp;
 import com.spring.demo.entity.User;
+import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.security.SecurityProperties;
+import com.spring.demo.service.ArticleService;
 import com.spring.demo.service.UserService;
 import com.spring.demo.service.serviceImpl.MyUserDetailService;
 import org.slf4j.Logger;
@@ -34,6 +39,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -42,6 +50,12 @@ public class LoginController {
 
     private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+
+    @Autowired
+    private ArticleService articleService;
+
+    @Autowired
+    UserMapper userMapper;
 
     @Autowired
     private MyUserDetailService myUserDetailService;
@@ -69,7 +83,18 @@ public class LoginController {
     }
 
     @RequestMapping("/home")
-    public String toHome() {
+    public String toHome(HttpServletRequest request, @AuthenticationPrincipal UserDetails user) {
+        Long userId = userMapper.getUserIdByName(user.getUsername());
+        PageHelper.startPage(1, 5);
+
+
+        
+        Map<String, String> article = new HashMap<>();
+        List<Article> titleList = articleService.showArticleTitle(userId);
+        PageInfo<Article> pageInfo = new PageInfo<>(titleList);
+        request.setAttribute("articles",article);
+        request.setAttribute("pageInfo",pageInfo);
+        logger.info(pageInfo.toString());
         return "/home";
     }
 

@@ -38,4 +38,8 @@ public class ArticleServiceImpl implements ArticleService {
     public Article viewArticleById(Long articleId) {
         return articleMapper.viewArticleById(articleId);
     }
+
+    public List<Article> showArticleTitle(Long userId) {
+        return articleMapper.showArticleTitle(userId);
+    }
 }

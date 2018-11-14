@@ -45,4 +45,12 @@
         where id = #{articleId}
 
     </select>
+
+    <select id="showArticleTitle" parameterType="long" resultType="com.spring.demo.entity.Article">
+        select title,
+               id articleId,
+               create_time createTime
+        from article
+        where user_id = #{userId}
+    </select>
 </mapper>

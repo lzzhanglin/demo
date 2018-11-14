@@ -1,0 +1,12 @@
+/*#footer{*/
+    /*margin-top: 200px;*/
+    /*margin-bottom: 100px;*/
+    /*flex: auto;*/
+/*}*/
+
+.container {
+    min-height: calc(100vh - 140px);
+}
+.footer {
+    height: 50px;
+}

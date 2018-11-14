@@ -14,4 +14,6 @@ public interface ArticleMapper {
     public int deleteArticle(Long articleId);
 
     public Article viewArticleById(Long articleId);
+
+    public List<Article> showArticleTitle(Long userId);
 }

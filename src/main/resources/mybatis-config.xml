@@ -1,0 +1,32 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "mybatis-3-config.dtd">
+<configuration>
+
+
+<plugins>
+    <!-- com.github.pagehelper为PageHelper类所在包名 -->
+    <plugin interceptor="com.github.pagehelper.PageInterceptor">
+        <!-- 使用下面的方式配置参数，后面会有所有的参数介绍 -->
+        <property name="param1" value="value1"/>
+    </plugin>
+</plugins>
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/test" />
+                <property name="username" value="root" />
+                <property name="password" value="zhanglin999" />
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="/resources/xml/ArticleMapper.xml" />
+        <mapper resource="/resources/xml/UserMapper.xml" />
+    </mappers>
+
+</configuration>

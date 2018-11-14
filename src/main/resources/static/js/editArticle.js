@@ -2,7 +2,6 @@ $().ready(function() {
     var articleId = $("#articleIdH").val();
 var title = $("#titleH").val();
 var content = $("#contentH").val();
-    console.log("title is: " + title + "***" + content);
     if (title != null && title != "" && title != undefined) {
         $("#articleId").val(articleId);
         $("#title").val(title);
@@ -30,7 +29,6 @@ $("#saveArticleBtn").click(function () {
     article.title = title;
     article.content = content;
     article.articleId = articleId;
-    console.log("文章id为：" + articleId);
     if (articleId == "" || articleId == null || articleId == undefined) {
         //articleId 为空 保存操作
         $.ajax({

@@ -41,7 +41,7 @@
     </table>
 
     <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog" id="fabu">
+        <div class="modal-dialog" id="viewAndEdit">
             <div class="modal-content">
                 <form data-name="" role="form" id="viewArticleForm"  onsubmit="return false">
                     <div class="modal-header">
@@ -55,6 +55,7 @@
                         <form class="form-inline" role="form">
                             <div class="form-group">
                                 <label class="form-label">标题</label>
+                                <input type="hidden" id="articleId">
                                 <input type="text" class="form-control" id="title" name="title">
                             </div>
                             <div class="form-group">
@@ -75,12 +76,14 @@
 
                         </div>
                     </div>
+                    </div>
                 </form>
+
         </div>
     </div>
 
 
-   
+
 </div>
 </div>
 </body>

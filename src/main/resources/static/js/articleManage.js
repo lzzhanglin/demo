@@ -2,6 +2,7 @@ $('#table').bootstrapTable(
     {
     cache: false,
     method: 'post',
+        escape:true,
         sortable: false,
     pageList: [10,15,20,30,50],
     pagination: true,
@@ -112,6 +113,12 @@ function viewArticle(articleId) {
 
 
 function editArticle(articleId) {
+    $("#articleId").val(articleId);
+    $("#updateArticleBtn").show();
+    $("#title").removeAttr("readonly", "readonly");
+    $("#content").removeAttr("readonly", "readonly");
+
+
     var data = {};
     data.articleId = articleId;
     $.ajax({
@@ -126,62 +133,71 @@ function editArticle(articleId) {
         // contentType: "application/x-www-form-urlencoded",
         // contentType: "application/json;charset=utf-8",
         success: function (data) {
+            $("#title").val("");
+            $("#content").val("");
             $("#title").val(data.title);
             $("#content").val(data.content);
         }
     });
     $('#con-close-modal').modal('show');
-    $("#updateArticleBtn").click(function () {
-
-        var title = $("#title").val();
-        var content = $("#content").val();
-        var article = {};
-        article.articleId = articleId;
-        console.log(article);
-        article.title = title;
-        article.content = content;
-        $.ajax({
-            type: "POST",
-            url: "/article/update",
-            // async:false,
-            data: article,
-
-            //type、contentType必填,指明传参方式
-            dataType: "json",
-
-            // contentType: "application/x-www-form-urlencoded",
-            // contentType: "application/json;charset=utf-8",
-            success: function (data) {
-                if (data.status == "failed") {
-                    swal({title: '保存失败！',
-                        type:"error",
-                        timer:1000,
-                        showConfirmButton:false});
-
-                    console.log("save failed")
-                } else if (data.status == "illegalArgument") {
-                    swal({
-                        title: '标题不能为空！',
-                        type: "error",
-                        timer: 1000,
-                        showConfirmButton: false
-                    });
-                }
-                else{
-                    $("#table").bootstrapTable('refresh',data);
-                    swal({title: '保存成功！',
-                        type:"success",
-                        timer:1000,
-                        showConfirmButton:false});
-
-
-
-                }
-            }
-        });
-    })
 
 }
+$("#updateArticleBtn").click(function () {
+
+
+    var title = $("#title").val();
+    var content = $("#content").val();
+    var blog = {};
+
+    blog.articleId = $("#articleId").val();
+    blog.title = title;
+    blog.content = content;
+
+    $.ajax({
+        type: "POST",
+        url: "/article/update",
+        async:false,
+        data: blog,
+
+        //type、contentType必填,指明传参方式
+        dataType: "json",
+
+        // contentType: "application/x-www-form-urlencoded",
+        // contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            delete blog.articleId;
+            delete blog.title;
+            delete blog.content;
+            if (data.status == "failed") {
+                swal({title: '保存失败！',
+                    type:"error",
+                    timer:1000,
+                    showConfirmButton:false});
+
+            } else if (data.status == "illegalArgument") {
+                swal({
+                    title: '标题不能为空！',
+                    type: "error",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            }
+            else{
+                $("#table").bootstrapTable('refresh',data);
+                $("#title").html("");
+                $("#content").html("");
+                swal({title: '保存成功！',
+                    type:"success",
+                    timer:1000,
+                    showConfirmButton:false});
+
+
+
+            }
+        }
+    });
+})
+
 
 
 function detailFormatter(index, row) {
@@ -203,7 +219,6 @@ function deleteArticle(articleId) {
         cancelButtonColor: '#d33',
         confirmButtonText: '确定删除！',
     }).then(function(isConfirm){
-        console.log(isConfirm);
         if (isConfirm.dismiss != 'cancel') {
             $.ajax({
                 type: "POST",
@@ -223,7 +238,6 @@ function deleteArticle(articleId) {
                             timer:1000,
                             showConfirmButton:false});
 
-                        console.log("save failed")
                     } else {
                         $("#table").bootstrapTable('refresh',data);
                         swal(

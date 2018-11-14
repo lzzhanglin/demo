@@ -5,6 +5,8 @@ import com.spring.demo.entity.QuertyParams;
 import com.spring.demo.entity.Resp;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.ArticleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +24,8 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/article")
 public class ArticleController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserMapper userMapper;
@@ -100,6 +104,7 @@ public class ArticleController {
         Article article = new Article();
         String s = request.getParameter("articleId");
         Long articleId = Long.valueOf(s);
+        logger.info("更新操作的articleId是：{}", articleId);
         String title = request.getParameter("title");
         if (Objects.equals(null, title) || Objects.equals("", title)) {
             return new Resp("illegalArgument", "title is null");
@@ -155,5 +160,17 @@ public class ArticleController {
         return article;
 //        request.setAttribute("title", article.getTitle());
 //        request.setAttribute("content", article.getContent());
+    }
+
+    @RequestMapping("/show")
+    public String showArticle(HttpServletRequest request) {
+        String aId = request.getParameter("id");
+        if (Objects.equals(null, aId)) {
+            throw new IllegalArgumentException("articleId为空");
+        }
+            Long articleId = Long.valueOf(aId);
+        Article article = articleService.viewArticleById(articleId);
+        request.setAttribute("article",article);
+        return "/showArticle";
     }
 }
