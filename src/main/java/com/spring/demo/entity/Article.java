@@ -1,7 +1,10 @@
 package com.spring.demo.entity;
 
 
-public class Article {
+
+public class Article  {
+
+    public String username;
 
     public Long articleId;
 
@@ -12,6 +15,14 @@ public class Article {
     public String createTime;
 
     public String content;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public Long getArticleId() {
         return articleId;

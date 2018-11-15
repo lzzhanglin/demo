@@ -9,7 +9,7 @@ public interface ArticleService {
 
     public Long updateArticle(Article article);
 
-    public List<Article> getArticleList(Long userId);
+    public List<Article> getArticleList(Long userId,Long offset,Long size);
 
     public int deleteArticle(Long articleId);
 

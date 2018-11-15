@@ -1,6 +1,7 @@
 package com.spring.demo.mapper;
 
 import com.spring.demo.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 
 public interface UserMapper {
@@ -17,4 +18,8 @@ public interface UserMapper {
     public User queryUserProfile(String username);
 
     public Long getUserIdByName(String username);
+
+    public String queryPwdByUsername(String username);
+
+    public int updatePwdByUsername(@Param("username") String username, @Param("newPwd") String newPwd);
 }

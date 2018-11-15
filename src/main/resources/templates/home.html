@@ -14,30 +14,10 @@
 <div th:include="navbar :: navbar"></div>
 
 <div class="container">
-    <!--<div class="row">-->
-        <!--<div class="col-md-8 col-md-offset-4">-->
 
-            <!--<div class="page-header">-->
-                <!--<input id="pageInfo" type="hidden" th:value = "${pageInfo.list}">-->
-
-                <!--<input id="title1H" type="hidden" th:value="${articles.title1}" >-->
-                <!--<h1 id="title1" ></h1>-->
-            <!--</div>-->
-            <!--<div class="page-header">-->
-                <!--<input id="title2H" type="hidden" th:value="${articles.title2}" >-->
-
-                <!--<h1 id="title2" ></h1>-->
-            <!--</div>-->
-            <!--<div class="page-header">-->
-                <!--<input id="title3H" type="hidden" th:value="${articles.title3}" >-->
-
-                <!--<h1 id="title3" ></h1>-->
-            <!--</div>-->
-
-        <!--</div>-->
-    <!--</div>-->
-
+<input type="hidden" id="pageInfo" th:value="${pageInfo}">
     <table class="table table-striped">
+
 
         <tr th:each="article : ${pageInfo.list}">
 
@@ -56,6 +36,34 @@
             <!--</div>-->
         </tr>
     </table>
+
+    <nav class="nav nav-pills pull-right" >
+        <ul class="pagination" >
+            <li><a href="">&laquo;</a></li>
+
+            <li>
+                <a th:if="${not isFirstPage}" th:href="@{${'/home'}(pageNum=${pageNum-1},pageSize=${pageSize})}">Previous</a>
+                <a th:if="${isFirstPage}" href="javascript:void(0);">Previous</a>
+            </li>
+
+            <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
+                <a th:if="${pageNum eq pageNo}" href="javascript:void(0);">
+                    <span th:text="${pageNo}"></span>
+                </a>
+
+                <a th:if="${not (pageNum eq pageNo)}" th:href="@{${'/home'}(pageNum=${pageNo},pageSize=${pageSize})}">
+                    <span th:text="${pageNo}"></span>
+                </a>
+            </li>
+            <li>
+                <a th:if="${not isLastPage}" th:href="@{${'/home'}(pageNum=${pageNum+1},pageSize=${pageSize})}">Next</a>
+                <a th:if="${isLastPage}" href="javascript:void(0);">Next</a>
+            </li>
+
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </nav>
+
 
 </div>
 <div class="row" id="footer">

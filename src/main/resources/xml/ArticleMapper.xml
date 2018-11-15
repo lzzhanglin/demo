@@ -19,17 +19,35 @@
         where id = #{articleId}
     </update>
 
-    <select id="getArticleList" resultType="com.spring.demo.entity.Article" parameterType="long">
-        select id articleId,
-               user_id userId,
+    <select id="getArticleList" resultType="com.spring.demo.entity.Article" parameterType="map">
+        select u.username,
+               a.id articleId,
+               a.user_id userId,
                title,
-               create_time createTime,
+               a.create_time createTime,
                content
-            from article
-        where user_id = #{userId}
-        order by create_time desc
+            from article a
+        left join user u
+        on a.user_id = u.id
+        where a.user_id = #{userId}
+        order by a.create_time desc
+                 limit #{offset},#{size}
+
+
 
     </select>
+
+    <select id="getArticleTotalNum" resultType="int" parameterType="long">
+        select count(title)
+        from article
+        where user_id = #{userId}
+
+
+
+
+    </select>
+
+
     <delete id="deleteArticle" parameterType="long">
         delete from article
         <!--<if test="articleId !='' and articleId !=null">-->
@@ -52,5 +70,6 @@
                create_time createTime
         from article
         where user_id = #{userId}
+        order by create_time desc
     </select>
 </mapper>

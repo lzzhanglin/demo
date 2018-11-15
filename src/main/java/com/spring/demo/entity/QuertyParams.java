@@ -8,6 +8,9 @@ public class QuertyParams {
 
     public Long userId;
 
+    public long offset;
+
+
     public int getPageSize() {
         return pageSize;
     }
@@ -30,5 +33,13 @@ public class QuertyParams {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public long getOffset() {
+        return offset;
+    }
+
+    public void setOffset(long offset) {
+        this.offset = offset;
     }
 }

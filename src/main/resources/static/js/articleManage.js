@@ -4,8 +4,10 @@ $('#table').bootstrapTable(
     method: 'post',
         escape:true,
         sortable: false,
-    pageList: [10,15,20,30,50],
+    pageList: [5,10,15,20,30],
     pagination: true,
+        pageNumber:1,
+        pageSize:10,
     sidePagination: 'server',
         sortOrder:'userId',
 
@@ -14,14 +16,15 @@ $('#table').bootstrapTable(
     // queryParams :$("#userId").val(),
         queryParams: function (params) {
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                // limit: params.limit,   //页面大小
-                offset: params.offset,  //页码
-                pageSize:10,
-                pageNumber:1,
+                pageSize: params.limit,   //页面大小
+                offset: params.offset,  //偏移量
+                // pageSize:10,
+                // pageNumber:1,
                 userId:$("#userId").val(),
-                length: 6,
-                order:'desc'
+                // length: 6,
+                // order:'desc'
             };
+            // console.log(temp);
             return temp;
 
         },
@@ -37,8 +40,8 @@ $('#table').bootstrapTable(
     showRefresh: true,
     url: '/article/getArticleList',
     columns: [
-        {   field:'userId',
-            title:'用户id',
+        {   field:'username',
+            title:'用户名',
             align:'center',
             showSelectTitle:true,
 

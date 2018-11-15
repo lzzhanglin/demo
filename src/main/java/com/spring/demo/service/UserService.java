@@ -16,5 +16,8 @@ public interface UserService {
 
     public User queryUserProfile(String username);
 
+    public boolean updatePwdByUsername(String username, String newPwd);
+
+
 
 }

@@ -83,18 +83,31 @@ public class LoginController {
     }
 
     @RequestMapping("/home")
-    public String toHome(HttpServletRequest request, @AuthenticationPrincipal UserDetails user) {
+    public String toHome(HttpServletRequest request, @AuthenticationPrincipal UserDetails user,
+                         @RequestParam(defaultValue = "1") Integer pageNum,
+                         @RequestParam(defaultValue = "8") Integer pageSize) {
         Long userId = userMapper.getUserIdByName(user.getUsername());
-        PageHelper.startPage(1, 5);
+        PageHelper.startPage(pageNum, pageSize);
+        List<Article> titleList = articleService.showArticleTitle(userId);
 
 
         
-        Map<String, String> article = new HashMap<>();
-        List<Article> titleList = articleService.showArticleTitle(userId);
-        PageInfo<Article> pageInfo = new PageInfo<>(titleList);
-        request.setAttribute("articles",article);
+        PageInfo pageInfo = new PageInfo(titleList);
+
+
+        request.setAttribute("pageNum", pageInfo.getPageNum());
+        //获得一页显示的条数
+        request.setAttribute("pageSize", pageInfo.getPageSize());
+        //是否是第一页
+        request.setAttribute("isFirstPage", pageInfo.isIsFirstPage());
+        //获得总页数
+        request.setAttribute("totalPages", pageInfo.getPages());
+        //是否是最后一页
+        request.setAttribute("isLastPage", pageInfo.isIsLastPage());
+
+
+
         request.setAttribute("pageInfo",pageInfo);
-        logger.info(pageInfo.toString());
         return "/home";
     }
 

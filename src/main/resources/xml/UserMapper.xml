@@ -49,4 +49,14 @@
         from user
         where username = #{username}
     </select>
+    <select id="queryPwdByUsername" parameterType="string" resultType="string">
+        select password from user
+        where username = #{username}
+    </select>
+
+    <update id="updatePwdByUsername" parameterType="map">
+        update user
+        set password = #{newPwd}
+        where username = #{username}
+    </update>
 </mapper>

@@ -2,10 +2,17 @@ package com.spring.demo.controller;
 
 import com.spring.demo.entity.Resp;
 import com.spring.demo.entity.User;
+import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.UserService;
+import com.spring.demo.service.serviceImpl.MyUserDetailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +27,17 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MyUserDetailService myUserDetailService;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping("/editProfile")
     public String toEditPage(HttpServletRequest request, @AuthenticationPrincipal UserDetails user, Model model) {
@@ -50,5 +68,35 @@ public class UserController {
         } else {
             return new Resp("failed", "save failed");
         }
+    }
+
+    @RequestMapping("/changePwd")
+    public String changePassword(HttpServletRequest request) {
+        return "/changePwd";
+    }
+
+    @RequestMapping("/changePwdPost")
+    @ResponseBody
+    public Resp changePwdPost(HttpServletRequest request, @AuthenticationPrincipal UserDetails user) {
+        String oldPwd = request.getParameter("oldPwd");
+        String newPwd = request.getParameter("newPwd");
+        String newPwdR = request.getParameter("newPwdR");
+        if (!Objects.equals(newPwd, newPwdR)) {
+            return new Resp("not_same", "password is wrong");
+        }
+
+//        Authentication currentuser= SecurityContextHolder.getContext().getAuthentication();
+        String pwdFromDatabase = userMapper.queryPwdByUsername(user.getUsername());
+        boolean result = passwordEncoder.matches(oldPwd, pwdFromDatabase);
+        if (!result) {
+            return new Resp("failed", "password is wrong");
+        }
+        String newPwdEncoded = passwordEncoder.encode(newPwd);
+        userService.updatePwdByUsername(user.getUsername(), newPwdEncoded);
+
+
+
+
+        return new Resp("success", "change password success");
     }
 }

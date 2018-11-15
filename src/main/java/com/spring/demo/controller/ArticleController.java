@@ -1,8 +1,12 @@
 package com.spring.demo.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.spring.demo.entity.Article;
 import com.spring.demo.entity.QuertyParams;
 import com.spring.demo.entity.Resp;
+import com.spring.demo.entity.ReturnPage;
+import com.spring.demo.mapper.ArticleMapper;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.ArticleService;
 import org.slf4j.Logger;
@@ -32,6 +36,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @RequestMapping("/edit")
     public String toEditArticle(HttpServletRequest request,@AuthenticationPrincipal UserDetails user) {
@@ -123,7 +130,8 @@ public class ArticleController {
     }
 
     @RequestMapping("/manage")
-    public String manageArticle(HttpServletRequest request,@AuthenticationPrincipal UserDetails user) {
+    public String manageArticle(HttpServletRequest request,@AuthenticationPrincipal UserDetails user){
+
         Long userId = userMapper.getUserIdByName(user.getUsername());
         request.setAttribute("userId",userId);
         return "/articleManage";
@@ -132,11 +140,17 @@ public class ArticleController {
 
     @RequestMapping("/getArticleList")
     @ResponseBody
-    public List<Article> getArticleList( @RequestBody QuertyParams quertyParams) {
+    public ReturnPage<List<Article>> getArticleList(@RequestBody QuertyParams quertyParams) {
         Long userId = quertyParams.getUserId();
-//        String name =  Request["Name"];
-//        String  uId = request.getParameter("queryParams");
-       return articleService.getArticleList(userId);
+        Long size =Long.valueOf(quertyParams.getPageSize());
+        Long offset = Long.valueOf(quertyParams.getOffset());
+
+
+
+        List<Article> articleList = articleService.getArticleList(userId,offset,size);
+        Integer total = articleMapper.getArticleTotalNum(userId);
+        ReturnPage<List<Article>> returnPage = new ReturnPage<>(1,total,articleList);
+       return returnPage;
     }
 
     @RequestMapping("/delete")

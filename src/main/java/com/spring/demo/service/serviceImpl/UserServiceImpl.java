@@ -53,4 +53,13 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.queryUserProfile(username);
         return user;
     }
+
+    public boolean updatePwdByUsername(String username, String newPwd) {
+        int resultRow = userMapper.updatePwdByUsername(username, newPwd);
+        if (resultRow == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

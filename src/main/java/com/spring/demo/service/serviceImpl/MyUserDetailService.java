@@ -5,7 +5,10 @@ import com.spring.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -50,6 +53,19 @@ public class MyUserDetailService implements UserDetailsService  {
         );
         return user;
     }
+
+//    public void changePassword(String username,String oldPwd, String newPwd, String newPwdR) {
+//        Authentication currentuser= SecurityContextHolder.getContext().getAuthentication();
+//        String oldP = currentuser.getName();
+//        logger.info(currentuser.toString());
+//
+//        if(currentuser==null)
+//        {
+//            // This would indicate bad coding somewhere
+//            throw new AccessDeniedException("Can't change password as no Authentication object found in context " +
+//                    "for current user.");
+//        }
+//    }
 
 
 
