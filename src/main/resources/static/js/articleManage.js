@@ -67,7 +67,12 @@ $('#table').bootstrapTable(
 
 
                 visible:true,
-        },  {
+        }, {
+            field:'categoryName',
+            title:'分类',
+            visible:true,
+            align:'center',
+        }, {
             field:'createTime',
             title:'发表时间',
             visible:true,

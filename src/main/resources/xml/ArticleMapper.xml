@@ -5,17 +5,19 @@
 <mapper  namespace = "com.spring.demo.mapper.ArticleMapper">
     <insert id="saveArticle"  parameterType="com.spring.demo.entity.Article"
                 useGeneratedKeys="true" keyProperty="articleId">
-            insert into article (title, content,user_id)
+            insert into article (title, content,user_id,category_id)
             values (#{title,jdbcType=VARCHAR},
                     #{content,jdbcType=VARCHAR},
-                    #{userId,jdbcType=BIGINT})
+                    #{userId,jdbcType=BIGINT},
+                    #{categoryId,jdbcType=BIGINT})
     </insert>
 
     <update id="updateArticle" parameterType="com.spring.demo.entity.Article"
     useGeneratedKeys="true" keyProperty="articleId">
         update article
         set title = #{title},
-            content = #{content}
+            content = #{content},
+            category_id = #{categoryId}
         where id = #{articleId}
     </update>
 
@@ -24,11 +26,14 @@
                a.id articleId,
                a.user_id userId,
                title,
+               c.category_name categoryName,
                a.create_time createTime,
                content
             from article a
         left join user u
         on a.user_id = u.id
+        left join category c
+        on a.category_id = c.id
         where a.user_id = #{userId}
         order by a.create_time desc
                  limit #{offset},#{size}
@@ -46,6 +51,7 @@
 
 
     </select>
+
 
 
     <delete id="deleteArticle" parameterType="long">
@@ -72,4 +78,7 @@
         where user_id = #{userId}
         order by create_time desc
     </select>
+
+
+
 </mapper>

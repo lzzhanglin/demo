@@ -1,6 +1,7 @@
 package com.spring.demo.service;
 
 import com.spring.demo.entity.Article;
+import com.spring.demo.entity.Category;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface ArticleService {
     public Article viewArticleById(Long articleId);
 
     public List<Article> showArticleTitle(Long userId);
+
+
 }

@@ -2,10 +2,7 @@ package com.spring.demo.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.spring.demo.entity.Article;
-import com.spring.demo.entity.QuertyParams;
-import com.spring.demo.entity.Resp;
-import com.spring.demo.entity.ReturnPage;
+import com.spring.demo.entity.*;
 import com.spring.demo.mapper.ArticleMapper;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.ArticleService;
@@ -87,11 +84,20 @@ public class ArticleController {
         if (Objects.equals(null, title) || Objects.equals("", title)) {
             return new Resp("illegalArgument", "title is null");
         }
+        String categoryId = request.getParameter("categoryId");
+
         String content = request.getParameter("content");
         Article article = new Article();
         article.setUserId(userId);
         article.setTitle(title);
         article.setContent(content);
+        if (Objects.equals(null, categoryId)) {
+            article.setCategoryId(null);
+
+        } else {
+            article.setCategoryId(Long.valueOf(categoryId));
+
+        }
         Long articleId = articleService.saveArticle(article);
         if (!Objects.equals(null, articleId)) {
             return new Resp("success", "save success",articleId.toString());
@@ -116,10 +122,17 @@ public class ArticleController {
         if (Objects.equals(null, title) || Objects.equals("", title)) {
             return new Resp("illegalArgument", "title is null");
         }
+        String categoryId = request.getParameter("categoryId");
         String content = request.getParameter("content");
         article.setArticleId(articleId);
         article.setTitle(title);
         article.setContent(content);
+        if (Objects.equals(null, categoryId)) {
+            article.setCategoryId(null);
+        } else {
+            article.setCategoryId(Long.valueOf(categoryId));
+
+        }
         Long aId = articleService.updateArticle(article);
         if (!Objects.equals(null, aId)) {
             return new Resp("success", "update success");
@@ -187,4 +200,6 @@ public class ArticleController {
         request.setAttribute("article",article);
         return "/showArticle";
     }
+
+
 }

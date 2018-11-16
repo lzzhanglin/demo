@@ -22,14 +22,21 @@
 
 <div class="container">
     <input type="hidden" id="userId" name="userId" th:value = "*{userId}">
+    <div id="toolbar">
+
+        <button type="button" class="btn btn-primary" id="newCategoryBtn" >
+            <span class="glyphicon glyphicon-edit"></span>
+            新增
+        </button>
+    </div>
     <table id="table"
-        data-toolbar="#toolbar"
-        data-search="true"
-        data-show-refresh="true"
-        data-show-toggle="true"
-        data-show-columns="true"
-        data-show-export="true"
-        data-detail-view="true"
+           data-toolbar="#toolbar"
+           data-search="true"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-show-export="true"
+           data-detail-view="true"
            data-detail-formatter="detailFormatter"
            data-minimum-count-columns="2"
            data-show-pagination-switch="true"
@@ -46,45 +53,41 @@
                 <form data-name="" role="form" id="viewArticleForm"  onsubmit="return false">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="road_title">查看文章</h4>
+                        <h4 class="road_title" >分类管理</h4>
                     </div>
                     <div class="modal-body">
 
 
 
                         <form class="form-inline" role="form">
+
                             <div class="form-group">
-                                <label class="form-label">标题</label>
-                                <input type="hidden" id="articleId">
-                                <input type="text" class="form-control" id="title" name="title">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">内容</label>
-                                <textarea type="text" class="form-control"  rows="5" id="content" name="content">
-                                </textarea>
+                                <label class="form-label">分类名</label>
+                                <input type="hidden" id="categoryId">
+                                <input type="text" class="form-control" id="categoryName" name="categoryName">
                             </div>
                         </form>
 
 
-                    <div class="modal-footer">
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="updateArticleBtn">保存
-                            </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                            </button>
+                            <!--<div class="modal-footer">-->
+                                <button type="button" class="btn btn-primary" id="updateCategoryBtn">保存
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                </button>
 
 
+                            <!--</div>-->
                         </div>
-                    </div>
                     </div>
                 </form>
 
+            </div>
         </div>
+
+
+
     </div>
-
-
-
-</div>
 </div>
 
 <div class="row" id="footer">
@@ -96,4 +99,4 @@
 </div>
 </body>
 </html>
-<script type="text/javascript" src="../static/js/articleManage.js" th:inline="javascript" ></script>
+<script type="text/javascript" src="../static/js/categoryManage.js" th:inline="javascript" ></script>

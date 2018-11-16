@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace = "com.spring.demo.mapper.CategoryMapper">
+
+    <select id="getCategoryTotalNum" resultType="int" parameterType="long">
+        select count(category_name)
+        from category
+        where user_id = #{userId}
+    </select>
+
+
+
+
+    <select id="getCategoryByUserId" resultType="com.spring.demo.entity.Article" parameterType="long">
+        select id categoryId,
+               category_name categoryName
+        from category
+        where user_id = #{userId}
+    </select>
+
+    <select id="getCategoryList" resultType="com.spring.demo.entity.Category" parameterType="map">
+        select c.id categoryId,
+               c.category_name categoryName,
+               c.user_id userId
+
+        from category c
+                 left join user u
+                           on c.user_id = u.id
+        where c.user_id = #{userId}
+            limit #{offset},#{size}
+    </select>
+
+    <select id="viewCategory" parameterType="long" resultType="com.spring.demo.entity.Category">
+        select category_name categoryName,
+               id categoryId
+                from category
+              where id = #{categoryId}
+    </select>
+
+    <update id="updateCategory" parameterType="map">
+        update category
+        set category_name = #{categoryName}
+        where id = #{categoryId}
+    </update>
+    <delete id="deleteCategory" parameterType="long">
+        delete from category
+        where id = #{categoryId}
+    </delete>
+
+    <insert id="addCategory" parameterType="com.spring.demo.entity.Category">
+        insert into category
+            (category_name,user_id)
+        values(#{categoryName,jdbcType=VARCHAR},
+               #{userId,jdbcType=BIGINT})
+    </insert>
+</mapper>

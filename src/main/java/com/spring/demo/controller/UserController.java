@@ -82,7 +82,7 @@ public class UserController {
         String newPwd = request.getParameter("newPwd");
         String newPwdR = request.getParameter("newPwdR");
         if (!Objects.equals(newPwd, newPwdR)) {
-            return new Resp("not_same", "password is wrong");
+            return new Resp("not_same", "password is not same");
         }
 
 //        Authentication currentuser= SecurityContextHolder.getContext().getAuthentication();

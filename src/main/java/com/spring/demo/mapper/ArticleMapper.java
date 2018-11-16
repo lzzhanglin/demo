@@ -1,6 +1,7 @@
 package com.spring.demo.mapper;
 
 import com.spring.demo.entity.Article;
+import com.spring.demo.entity.Category;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,4 +23,6 @@ public interface ArticleMapper {
     public Article viewArticleById(Long articleId);
 
     public List<Article> showArticleTitle(Long userId);
+
+
 }

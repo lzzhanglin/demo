@@ -16,6 +16,10 @@ public class Article  {
 
     public String content;
 
+    public Long categoryId;
+
+    public String categoryName;
+
     public String getUsername() {
         return username;
     }
@@ -62,6 +66,22 @@ public class Article  {
 
     public String getContent() {
         return content;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
 

@@ -31,4 +31,8 @@ body{
 .btn:active:focus{
     outline: none;
 }
+#category{
+
+}
+
 /*#editor {overflow:scroll; max-height:300px}*/
