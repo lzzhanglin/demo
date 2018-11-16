@@ -2,9 +2,12 @@ $().ready(function() {
     var articleId = $("#articleIdH").val();
 var title = $("#titleH").val();
 var content = $("#contentH").val();
+var categoryH = $("#categoryH").val();
     if (title != null && title != "" && title != undefined) {
         $("#articleId").val(articleId);
         $("#title").val(title);
+
+        console.log(categoryH);
         editor.txt.html(content);
     }
 
@@ -34,11 +37,14 @@ var content = $("#contentH").val();
             for (var i = 0; i < data.length; i++) {
                 $("#category").append("<option value="+data[i].categoryId+">" + data[i].categoryName + "</option>");
             }
+            console.log("隐藏框的值为：" + categoryH);
+            $("#category").val(categoryH).trigger('change');
+
 
 
         }
     });
-    console.log("选中的值为：" + $("#category").val());
+    console.log("选中的值为： " + $("#category").val());
     // $("#category").select2().select2("val", null);
     // $('select').select2().select2('val', $('.select2 option:eq(1)').val());
     // $("#category").val("               ").select2();

@@ -53,6 +53,7 @@ public class ArticleController {
             Long userId = userMapper.getUserIdByName(username);
             request.setAttribute("title", null);
             request.setAttribute("content", null);
+            request.setAttribute("category", null);
             request.setAttribute("userId", userId);
             request.setAttribute("articleId",articleId);
 
@@ -67,6 +68,7 @@ public class ArticleController {
         request.setAttribute("articleId", articleId);
         request.setAttribute("title", article.getTitle());
         request.setAttribute("content", article.getContent());
+        request.setAttribute("category", article.getCategoryId());
         Long userId = userMapper.getUserIdByName(username);
         request.setAttribute("userId",userId);
         return "/editArticle";

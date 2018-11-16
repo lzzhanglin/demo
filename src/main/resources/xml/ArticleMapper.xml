@@ -63,7 +63,8 @@
 
     <select id="viewArticleById" parameterType="long" resultType="com.spring.demo.entity.Article">
         select title ,
-               content
+               content,
+               category_id categoryId
             from
             article
         where id = #{articleId}

@@ -145,6 +145,7 @@ function editArticle(articleId) {
             $("#content").val("");
             $("#title").val(data.title);
             $("#content").val(data.content);
+
         }
     });
     $('#con-close-modal').modal('show');
