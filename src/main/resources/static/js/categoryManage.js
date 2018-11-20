@@ -130,6 +130,7 @@ $("#updateCategoryBtn").click(function () {
                     $("#table").bootstrapTable('refresh',data);
                     $("#categoryId").html("");
                     $("#categoryName").html("");
+                    $('#con-close-modal').modal('hide');
                     swal({title: '添加成功！',
                         type:"success",
                         timer:1000,
@@ -152,41 +153,44 @@ $("#updateCategoryBtn").click(function () {
 
 
 
-    $.ajax({
-        type: "POST",
-        url: "/category/update",
-        async:false,
-        data: c,
-
-        //type、contentType必填,指明传参方式
-        dataType: "json",
-
-        // contentType: "application/x-www-form-urlencoded",
-        // contentType: "application/json;charset=utf-8",
-        success: function (data) {
-            if (data.status == "success") {
-
-                $("#table").bootstrapTable('refresh',data);
-                $("#categoryId").html("");
-                $("#categoryName").html("");
-                swal({title: '保存成功！',
-                    type:"success",
-                    timer:1000,
-                    showConfirmButton:false});
-
-
-            }
-            else{
-                swal({title: '保存失败！',
-                    type:"error",
-                    timer:1000,
-                    showConfirmButton:false});
-
-
-
-            }
-        }
-    });
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/category/update",
+    //     async:false,
+    //     data: c,
+    //
+    //     //type、contentType必填,指明传参方式
+    //     dataType: "json",
+    //
+    //     // contentType: "application/x-www-form-urlencoded",
+    //     // contentType: "application/json;charset=utf-8",
+    //     success: function (data) {
+    //         if (data.status == "success") {
+    //             console.log($("#category").val());
+    //             $("#category").select2('destroy').empty();
+    //             console.log("修改分类成功");
+    //
+    //             $("#table").bootstrapTable('refresh',data);
+    //             $("#categoryId").html("");
+    //             $("#categoryName").html("");
+    //             swal({title: '保存成功！',
+    //                 type:"success",
+    //                 timer:1000,
+    //                 showConfirmButton:false});
+    //
+    //
+    //         }
+    //         else{
+    //             swal({title: '保存失败！',
+    //                 type:"error",
+    //                 timer:1000,
+    //                 showConfirmButton:false});
+    //
+    //
+    //
+    //         }
+    //     }
+    // });
     }
 })
 
@@ -234,7 +238,7 @@ function deleteCategory(categoryId) {
                         $("#table").bootstrapTable('refresh',data);
                         swal(
                             '删除！',
-                            '该文章已经被删除。',
+                            '该分类已经被删除。',
                             'success'
                         );
                         // swal({title: '删除成功！',

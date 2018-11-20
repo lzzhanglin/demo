@@ -48,7 +48,7 @@
                 <div class="form-group">
                     <label class="col-sm-1 control-label">标   题:</label>
 
-                    <div class="col-sm-10 input-group">
+                    <div class="col-sm-6 input-group">
                         <input type="text" class="form-control" id="title" name="title">
                         <input type="hidden" id="userId" th:value="*{userId}">
                         <input type="hidden" id="titleH" th:value="*{title}">
@@ -70,28 +70,50 @@
             <!--</fieldset>-->
         </div>
     </form>
+<div class="form-horizontal">
+    <div class="form-group">
 
-<div id="editor">
-
-</div>
-    <div class="form-horizontal">
-    <div class="row">
-        <label class="col-sm-1 control-label">分类:</label>
-        <select class="js-example-basic-multiple" id="category" name="category" >
-        </select>
+    <label class="col-sm-1 control-label">正  文:</label>
+    <div class="col-sm-8 input-group">
+        <textarea type="textarea" class="form-control" placeholder="Text input" rows="5" id="content" name="content">
+        </textarea>
 
     </div>
+    </div>
+
+
+</div>
+
+
+    <!--<div id="editor">-->
+
+<!--</div>-->
+    <div class="form-horizontal">
+    <div class="form-group">
+
+        <label class="col-sm-1 control-label">分类:</label>
+        <select class="col-sm-3 js-example-basic-multiple col-sm-offset-1" id="category" name="category" >
+        </select>
+
+
+
+
+    </div>
+        <!--<div class="row">-->
+            <!--<div class="form-control">-->
+            <!--<label class="col-sm-1 form-control">新建分类:</label>-->
+            <!--<input class="form-control col-sm-7  " id="newCategory" name="newCategory" >-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-4">
             <div class="btn-group" role="group" aria-label="...">
-                <a href="/category/manage">
                 <!--<button type="button" class="btn btn-default">保存</button>-->
                 <button type="button" class="btn btn-info" id="addCategoryBtn" >
                     <span class="glyphicon glyphicon-edit"></span>
-                    分类管理
+                    添加分类
                     </button>
-                </a>
 
             </div>
             <div class="btn-group" role="group" aria-label="...">
@@ -115,46 +137,47 @@
 
 
 </div>
-<!--<div id="addCategoryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">-->
-    <!--<div class="modal-dialog" id="viewAndEdit">-->
-        <!--<div class="modal-content">-->
-            <!--<form data-name="" role="form" id="viewArticleForm"  onsubmit="return false">-->
-                <!--<div class="modal-header">-->
-                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                    <!--<h4 class="road_title">新建分类</h4>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
+<div id="addCategoryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" id="viewAndEdit">
+        <div class="modal-content">
+            <form data-name="" role="form" id="viewArticleForm"  onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="road_title">新建分类</h4>
+                </div>
+                <div class="modal-body">
 
 
 
-                    <!--<form class="form-inline" role="form">-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="form-label">标题</label>-->
-                            <!--<input type="text" class="form-control" id="categoryName" name="categoryName">-->
-                        <!--</div>-->
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="form-label">分类名称</label>
+                            <input type="hidden" id="categoryId" name="categoryId">
+                            <input type="text" class="form-control" id="categoryName" name="categoryName">
+                        </div>
 
-                    <!--</form>-->
-
-
-                    <!--<div class="modal-footer">-->
-                        <!--<div class="modal-footer">-->
-                            <!--<button type="button" class="btn btn-primary" id="saveCategoryBtn">保存-->
-                            <!--</button>-->
-                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭-->
-                            <!--</button>-->
+                    </form>
 
 
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</form>-->
-
-        <!--</div>-->
-    <!--</div>-->
-
+                    <div class="modal-footer">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="saveCategoryBtn">保存
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
 
 
-<!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+
+</div>
 
 <div class="row" id="footer">
     <div class="col-md-7 col-md-offset-5">

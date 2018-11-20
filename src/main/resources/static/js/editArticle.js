@@ -1,4 +1,6 @@
 $().ready(function() {
+
+
     var articleId = $("#articleIdH").val();
 var title = $("#titleH").val();
 var content = $("#contentH").val();
@@ -6,9 +8,8 @@ var categoryH = $("#categoryH").val();
     if (title != null && title != "" && title != undefined) {
         $("#articleId").val(articleId);
         $("#title").val(title);
+        $("#content").val(content);
 
-        console.log(categoryH);
-        editor.txt.html(content);
     }
 
         $('#category').select2({
@@ -37,7 +38,7 @@ var categoryH = $("#categoryH").val();
             for (var i = 0; i < data.length; i++) {
                 $("#category").append("<option value="+data[i].categoryId+">" + data[i].categoryName + "</option>");
             }
-            console.log("隐藏框的值为：" + categoryH);
+            console.log("ajax初始化");
             $("#category").val(categoryH).trigger('change');
 
 
@@ -50,14 +51,89 @@ var categoryH = $("#categoryH").val();
     // $("#category").val("               ").select2();
     // $("#category").select2('val', "");
 });
-var E = window.wangEditor
-var editor = new E('#editor')
-// 或者 var editor = new E( document.getElementById('editor') )
-editor.create()
+
+$("#addCategoryBtn").click(function () {
+    $('#addCategoryModal').modal('show');
+
+})
+
+    $("#saveCategoryBtn").click(function () {
+        var c = {};
+        c.categoryId = $("#categoryId").val();
+        c.categoryName = $("#categoryName").val();
+        if (c.categoryId == "" || c.categoryId == undefined || c.categoryId == null) {
+            $.ajax({
+                type: "POST",
+                url: "/category/add",
+                async:false,
+                data: c,
+
+                //type、contentType必填,指明传参方式
+                dataType: "json",
+
+                // contentType: "application/x-www-form-urlencoded",
+                // contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data.status == "success") {
+
+                        $("#categoryId").html("");
+                        $("#categoryName").html("");
+                        $('#addCategoryModal').modal('hide');
+                        $.ajax({
+                            type: "POST",
+                            url: "/category/getCategory",
+                            // async:false,
+                            data: 1,
+
+                            //type、contentType必填,指明传参方式
+                            dataType: "json",
+
+                            // contentType: "application/x-www-form-urlencoded",
+                            // contentType: "application/json;charset=utf-8",
+                            success: function (data) {
+                                $("#category").html('');
+                                console.log("清空下拉框");
+
+                                for (var i = 0; i < data.length; i++) {
+                                    $("#category").append("<option value="+data[i].categoryId+">" + data[i].categoryName + "</option>");
+                                }
+                                // $("#category").val(categoryH).trigger('change');
+
+
+
+                            }
+                        });
+                        swal({title: '添加成功！',
+                            type:"success",
+                            timer:1000,
+                            showConfirmButton:false});
+
+
+                    }
+                    else{
+                        swal({title: '添加失败！',
+                            type:"error",
+                            timer:1000,
+                            showConfirmButton:false});
+
+
+
+                    }
+                }
+            });
+        } else {
+
+
+
+
+        }
+    })
+    
+
 
 $("#editArticleBtn").click(function () {
     $("#articleForm #title").removeAttr("readonly", "readonly");
-    editor.$textElem.attr('contenteditable', true)
+    $("#articleForm #content").removeAttr("readonly", "readonly");
 })
 
 
@@ -67,7 +143,7 @@ $("#saveArticleBtn").click(function () {
     var articleId = $("#articleForm #articleId").val();
     var userId = $("#articleForm #userId").val();
     var title = $("#title").val();
-    var content = editor.txt.text();
+    var content = $("#content").val();
     var categoryId = $("#category").val().shift();
     var article = {};
     article.userId = userId;
@@ -117,9 +193,9 @@ $("#saveArticleBtn").click(function () {
                     });
                     $("#articleForm #articleId").val(data.data);
                     $("#articleForm #title").attr("readonly", "readonly");
+                    $("#articleForm #content").attr("readonly", "readonly");
 
 
-                    editor.$textElem.attr('contenteditable', false)
 
                     console.log("save success");
 
@@ -163,8 +239,8 @@ $("#saveArticleBtn").click(function () {
                         showConfirmButton:false});
                     // $("#articleForm #articleId").val(data.data);
                     $("#articleForm #title").attr("readonly", "readonly");
+                    $("#articleForm #content").attr("readonly", "readonly");
 
-                    editor.$textElem.attr('contenteditable', false)
 
                     console.log("save success");
 
