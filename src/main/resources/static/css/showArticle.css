@@ -6,6 +6,9 @@
 
 .container {
     min-height: calc(100vh - 140px);
+    text-indent : 40px;
+    line-height:38px;
+    letter-spacing:1px;
 }
 .footer {
     height: 50px;
