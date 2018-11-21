@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.HTML;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/category")
@@ -103,6 +104,9 @@ public class CategoryController {
         Category category = new Category();
         category.setCategoryName(request.getParameter("categoryName"));
         category.setUserId(userId);
+        if (Objects.equals(null, category.getCategoryName())||Objects.equals("",category.getCategoryName())) {
+            return new Resp("failed", "add failed");
+        }
         boolean result = categoryService.addCategory(category);
         if (result) {
             return new Resp("success", "add success");

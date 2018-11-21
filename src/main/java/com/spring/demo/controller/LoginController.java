@@ -69,20 +69,20 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+//
+//    @RequestMapping("/")
+//    public String toWelcome() {
+//
+//        return "/home";
+//    }
+//
+//    @RequestMapping("/welcome")
+//    public String welcome() {
+//
+//        return "/home";
+//    }
 
-    @RequestMapping("/")
-    public String toWelcome() {
-
-        return "/welcome";
-    }
-
-    @RequestMapping("/welcome")
-    public String welcome() {
-
-        return "/welcome";
-    }
-
-    @RequestMapping("/home")
+    @RequestMapping(value = {"/home","/",""})
     public String toHome(HttpServletRequest request, @AuthenticationPrincipal UserDetails user,
                          @RequestParam(defaultValue = "1") Integer pageNum,
                          @RequestParam(defaultValue = "8") Integer pageSize) {

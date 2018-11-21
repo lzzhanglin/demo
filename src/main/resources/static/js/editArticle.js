@@ -77,8 +77,9 @@ $("#addCategoryBtn").click(function () {
                     if (data.status == "success") {
 
                         $("#categoryId").html("");
-                        $("#categoryName").html("");
+                        $("#categoryName").val("");
                         $('#addCategoryModal').modal('hide');
+                        console.log('modal的值为：' + $("#categoryName").val());
                         $.ajax({
                             type: "POST",
                             url: "/category/getCategory",
@@ -91,6 +92,7 @@ $("#addCategoryBtn").click(function () {
                             // contentType: "application/x-www-form-urlencoded",
                             // contentType: "application/json;charset=utf-8",
                             success: function (data) {
+                                $("#categoryName").html('');
                                 $("#category").html('');
                                 console.log("清空下拉框");
 
@@ -133,7 +135,8 @@ $("#addCategoryBtn").click(function () {
 
 $("#editArticleBtn").click(function () {
     $("#articleForm #title").removeAttr("readonly", "readonly");
-    $("#articleForm #content").removeAttr("readonly", "readonly");
+    $("#content").removeAttr("readonly", "readonly");
+    $("#category").removeAttr("readonly", "readonly");
 })
 
 
@@ -193,7 +196,8 @@ $("#saveArticleBtn").click(function () {
                     });
                     $("#articleForm #articleId").val(data.data);
                     $("#articleForm #title").attr("readonly", "readonly");
-                    $("#articleForm #content").attr("readonly", "readonly");
+                    $("#content").attr("readonly", "readonly");
+                    $("#category").attr("readonly", "readonly");
 
 
 
@@ -239,7 +243,8 @@ $("#saveArticleBtn").click(function () {
                         showConfirmButton:false});
                     // $("#articleForm #articleId").val(data.data);
                     $("#articleForm #title").attr("readonly", "readonly");
-                    $("#articleForm #content").attr("readonly", "readonly");
+                    $("#content").attr("readonly", "readonly");
+                    $("#category").attr("readonly", "readonly");
 
 
                     console.log("save success");

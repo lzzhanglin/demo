@@ -5,7 +5,8 @@ $().ready(function() {
         rules: {
             username: {
                 required: true,
-                isExistUsername:true
+                isExistUsername:true,
+                rangelength: [1, 15]
             },
             email:{
                 required: true,
@@ -23,7 +24,8 @@ $().ready(function() {
         },
         messages: {
             username: {
-                required: "不能为空"
+                required: "不能为空",
+                rangelength: "长度{0}-{1}之间"
             },
             email:{
               required: "不能为空"
