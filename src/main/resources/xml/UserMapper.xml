@@ -59,4 +59,42 @@
         set password = #{newPwd}
         where username = #{username}
     </update>
+
+    <select id="searchUser" parameterType="map" resultType="com.spring.demo.entity.SearchUser">
+        select id userId,
+               username
+        from user
+        <where>
+
+        <if test="keyWord != null and keyWord !=''" >
+            and  username LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
+        </if>
+        </where>
+
+        limit #{offset},#{size}
+    </select>
+
+    <select id="searchUserTotal"  parameterType="string" resultType="int">
+        select count(username)
+        from user
+        <where>
+
+            <if test="keyWord != null and keyWord !=''" >
+                and  username LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
+            </if>
+        </where>
+
+
+    </select>
+    <select id="viewUser" parameterType="long" resultType="com.spring.demo.entity.SearchUser">
+        select username,
+               nickname,
+               phone,
+               birthday,
+               home_addr homeAddr,
+               school,
+               `describe`
+          from user
+        where id = #{userId}
+    </select>
 </mapper>

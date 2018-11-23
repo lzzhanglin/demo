@@ -10,6 +10,8 @@ public class QuertyParams {
 
     public long offset;
 
+    public String keyWord;
+
 
     public int getPageSize() {
         return pageSize;
@@ -41,5 +43,13 @@ public class QuertyParams {
 
     public void setOffset(long offset) {
         this.offset = offset;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 }

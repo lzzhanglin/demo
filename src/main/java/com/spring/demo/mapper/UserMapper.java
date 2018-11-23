@@ -1,7 +1,10 @@
 package com.spring.demo.mapper;
 
+import com.spring.demo.entity.SearchUser;
 import com.spring.demo.entity.User;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 public interface UserMapper {
@@ -22,4 +25,12 @@ public interface UserMapper {
     public String queryPwdByUsername(String username);
 
     public int updatePwdByUsername(@Param("username") String username, @Param("newPwd") String newPwd);
+
+    public List<SearchUser> searchUser(@Param("keyWord") String keyWord,
+                                       @Param("offset") Long offset,
+                                       @Param("size") Long size);
+
+    public int searchUserTotal(@Param("keyWord") String keyWord);
+
+    public SearchUser viewUser(Long userId);
 }

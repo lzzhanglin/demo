@@ -4,6 +4,8 @@ import com.spring.demo.entity.User;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service("userService")
@@ -62,4 +64,6 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+
 }

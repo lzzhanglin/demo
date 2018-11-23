@@ -26,7 +26,7 @@
 
                 <td th:value="${article.title}" >
 
-                    <a th:href="@{http://127.0.0.1:8080/article/show(id=${article.articleId})}">
+                    <a th:href="@{/article/show(id=${article.articleId})}">
                         <p th:text="${article.title}" ></p>
                     </a>
                 </td>

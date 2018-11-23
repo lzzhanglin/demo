@@ -1,6 +1,7 @@
 package com.spring.demo.controller;
 
 import com.spring.demo.entity.Resp;
+import com.spring.demo.entity.SearchUser;
 import com.spring.demo.entity.User;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.UserService;
@@ -99,4 +100,20 @@ public class UserController {
 
         return new Resp("success", "change password success");
     }
+
+    @RequestMapping("/view")
+    @ResponseBody
+
+    public SearchUser viewUser(HttpServletRequest request) {
+        String uId = request.getParameter("userId");
+        if (uId == "") {
+            throw new IllegalArgumentException("userId为空");
+        }
+        Long userId = Long.valueOf(uId);
+        SearchUser user = userMapper.viewUser(userId);
+        return user;
+
+
+    }
+
 }

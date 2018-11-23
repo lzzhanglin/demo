@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../static/js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap-table-zh-CN.js"></script>
+
+    <link rel="stylesheet" href="../static/css/bootstrap-table.css">
+    <link rel="stylesheet" href="../static/css/articleManage.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/limonte-sweetalert2/7.28.11/sweetalert2.all.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/limonte-sweetalert2/7.28.11/sweetalert2.css">
+    <!--<link rel = "stylesheet" href="../static/css/art.css" />-->
+</head>
+<body>
+<div th:include="navbar :: navbar"></div>
+
+<div class="container">
+    <input type="hidden" id="userId" name="userId" th:value = "*{userId}">
+    <table id="table"
+           data-toolbar="#toolbar"
+           data-search="true"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-show-export="true"
+           data-detail-view="true"
+           data-detail-formatter="detailFormatter"
+           data-minimum-count-columns="2"
+           data-show-pagination-switch="true"
+           data-pagination="true"
+           data-id-field="articleId"
+           data-page-list="[10,15,20,30,ALL]"
+           data-show-footer="false"
+           data-side-pagination="server">
+    </table>
+
+    <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" id="viewAndEdit">
+            <div class="modal-content">
+                <form data-name="" role="form" id="viewArticleForm"  onsubmit="return false">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="road_title">查看文章</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label class="form-label">标题</label>
+                                <input type="hidden" id="articleId">
+                                <input type="text" class="form-control" id="title" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">内容</label>
+                                <textarea type="text" class="form-control"  rows="5" id="content" name="content">
+                                </textarea>
+                            </div>
+                        </form>
+
+
+                        <div class="modal-footer">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="updateArticleBtn">保存
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                </button>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<div class="row" id="footer">
+    <div class="col-md-7 col-md-offset-5">
+
+        <div th:include="footer :: footer"></div>
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../static/js/articleManage.js" th:inline="javascript" ></script>
