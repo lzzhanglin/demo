@@ -22,15 +22,14 @@
 
 <div class="container">
     <input type="hidden" id="userId" name="userId" th:value = "*{userId}">
-    <table id="table"
+    <table id="followTable"
            data-toolbar="#toolbar"
            data-search="true"
            data-show-refresh="true"
            data-show-toggle="true"
            data-show-columns="true"
            data-show-export="true"
-           data-detail-view="true"
-           data-detail-formatter="detailFormatter"
+           data-detail-view="false"
            data-minimum-count-columns="2"
            data-show-pagination-switch="true"
            data-pagination="true"
@@ -39,14 +38,13 @@
            data-show-footer="false"
            data-side-pagination="server">
     </table>
-
-    <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div id="userModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog" id="viewAndEdit">
             <div class="modal-content">
                 <form data-name="" role="form" id="viewArticleForm"  onsubmit="return false">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="road_title">查看文章</h4>
+                        <h4 class="road_title">查看用户</h4>
                     </div>
                     <div class="modal-body">
 
@@ -54,22 +52,41 @@
 
                         <form class="form-inline" role="form">
                             <div class="form-group">
-                                <label class="form-label">标题</label>
-                                <input type="hidden" id="articleId">
-                                <input type="text" class="form-control" id="title" name="title">
+                                <label class="form-label">用户名</label>
+                                <input type="text" class="form-control" id="username" name="username">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">内容</label>
-                                <textarea type="text" class="form-control"  rows="5" id="content" name="content">
-                                </textarea>
+                                <label class="form-label">昵称</label>
+                                <input type="text" class="form-control" id="nickname" name="nickname">
                             </div>
+                            <div class="form-group">
+                                <label class="form-label">电话</label>
+                                <input type="text" class="form-control" id="phone" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">学校</label>
+                                <input type="text" class="form-control" id="school" name="school">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">家庭地址</label>
+                                <input type="text" class="form-control" id="homeAddr" name="homeAddr">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">生日</label>
+                                <input type="text" class="form-control" id="birthday" name="birthday">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">描述</label>
+                                <input type="text" class="form-control" id="describe" name="describe">
+                            </div>
+
                         </form>
 
 
                         <div class="modal-footer">
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="updateArticleBtn">保存
-                                </button>
+                                <!--<button type="button" class="btn btn-primary" id="updateArticleBtn">保存-->
+                                <!--</button>-->
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                                 </button>
 
@@ -85,6 +102,7 @@
 
 
     </div>
+
 </div>
 
 <div class="row" id="footer">
@@ -96,4 +114,4 @@
 </div>
 </body>
 </html>
-<script type="text/javascript" src="../static/js/articleManage.js" th:inline="javascript" ></script>
+<script type="text/javascript" src="../static/js/followManage.js" th:inline="javascript" ></script>

@@ -26,4 +26,86 @@
         </where>
     </select>
 
+    <delete id="cancelFollow" parameterType="com.spring.demo.entity.FollowEntity">
+        delete from
+        follow
+        <where>
+            <if test="followUserId != null and followUserId !=''" >
+                and  follow_user_id = #{followUserId}
+            </if>
+            <if test="userId != null and userId !=''" >
+                and  user_id = #{userId}
+            </if>
+        </where>
+    </delete>
+
+    <select id="getFollowList" parameterType="map" resultType="com.spring.demo.entity.SearchUser">
+        select follow_user_id userId,
+        username
+        from follow f
+        left join user u
+        on f.follow_user_id = u.id
+        <where>
+            <if test="currentUserId != null and currentUserId !=''" >
+                and  user_id = #{currentUserId}
+            </if>
+
+        </where>
+        limit #{offset},#{size}
+    </select>
+
+    <select id="getFollowTotal" resultType="int" parameterType="long">
+        select count(follow_user_id)
+        from follow f
+        left join user u
+        on f.follow_user_id = u.id
+        <where>
+            <if test="currentUserId != null and currentUserId !=''" >
+                and  user_id = #{currentUserId}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="getFollowerList" parameterType="map" resultType="com.spring.demo.entity.SearchUser">
+        select user_id userId,
+        username
+        from follow f
+        left join user u
+        on f.user_id = u.id
+        <where>
+            <if test="currentUserId != null and currentUserId !=''" >
+                and  follow_user_id = #{currentUserId}
+            </if>
+
+        </where>
+        limit #{offset},#{size}
+    </select>
+
+    <select id="getFollowerTotal" parameterType="long" resultType="int">
+        select count(user_id)
+        from follow f
+        left join user u
+        on f.user_id = u.id
+        <where>
+            <if test="currentUserId != null and currentUserId !=''" >
+                and  follow_user_id = #{currentUserId}
+            </if>
+
+        </where>
+    </select>
+    <delete id="removeFan" parameterType="map">
+        delete from
+        follow
+        <where>
+            <if test="followUserId != null and followUserId !=''" >
+                and  follow_user_id = #{followUserId}
+            </if>
+            <if test="userId != null and userId !=''" >
+                and  user_id = #{userId}
+            </if>
+
+        </where>
+    </delete>
+
 </mapper>

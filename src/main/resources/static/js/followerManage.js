@@ -1,4 +1,4 @@
-$('#userTable').bootstrapTable(
+$('#followTable').bootstrapTable(
     {
         cache: false,
         method: 'post',
@@ -22,11 +22,9 @@ $('#userTable').bootstrapTable(
                 // pageSize:10,
                 // pageNumber:1,
                 userId:$("#userId").val(),
-                keyWord:$("#searchForm #keyWord").val(),
                 // length: 6,
                 // order:'desc'
             };
-            console.log("111传输的参数为："+$("#searchForm #keyWord").val());
             return temp;
 
         },
@@ -40,10 +38,10 @@ $('#userTable').bootstrapTable(
         search: false,
         // undefinedText:"",
         showRefresh: false,
-        url: '/search/userList',
+        url: '/follow/getFollowerList',
         columns: [
             {   field:'username',
-                title:'用户名',
+                title:'我的粉丝',
                 align:'center',
                 showSelectTitle:true,
 
@@ -63,7 +61,7 @@ $('#userTable').bootstrapTable(
                 formatter : function(cell, row, index) {
                     btnEdit = '<a class="btn-success btn-sm"  onclick="viewUser('+row.userId+')">查看</a>';
                     if (row.isFollowCurrentUser == 1) {
-                        btnView = '<a class="btn-primary btn-sm"  onclick="cancelFollow('+row.userId+')">已关注</a>';
+                        btnView = '<a class="btn-primary btn-sm"  onclick="removeFan('+row.userId+')">移除粉丝</a>';
 
 
                     } else {
@@ -76,33 +74,6 @@ $('#userTable').bootstrapTable(
                 },
             }],
     });
-
-$("#searchBtn").click(function () {
-    console.log("点击了搜索按钮");
-    var data = {};
-    data.keyWord = $("#keyWord").val();
-    $.ajax({
-        type: "POST",
-        url: "/search/userList",
-        async:false,
-        data: JSON.stringify(data),
-
-        //type、contentType必填,指明传参方式
-        dataType: "json",
-
-        // contentType: "application/x-www-form-urlencoded",
-        contentType: "application/json;charset=utf-8",
-        success: function (data) {
-            $("#userTable").bootstrapTable('refresh', data);
-
-            console.log("成功接收服务端返回的数据");
-        }
-    });
-
-
-
-})
-
 
 function viewUser(userId) {
     var data = {};
@@ -167,7 +138,7 @@ function addFollow(userId) {
                     timer: 1000,
                     showConfirmButton: false
                 });
-                $("#userTable").bootstrapTable('refresh', data);
+                $("#followTable").bootstrapTable('refresh', data);
             } else {
                 swal({title: '关注失败！',
                     type:"error",
@@ -175,19 +146,20 @@ function addFollow(userId) {
                     showConfirmButton:false});
             }
 
+
         }
     });
 
 }
 
-function cancelFollow(userId) {
+function removeFan(userId) {
 
 
     var data = {};
     data.userId = userId;
     $.ajax({
         type: "POST",
-        url: "/follow/cancel",
+        url: "/follow/removeFan",
         async:false,
         data: data,
 
@@ -199,14 +171,14 @@ function cancelFollow(userId) {
         success: function (data) {
             if (data.status == "success") {
                 swal({
-                    title: '取消关注成功！',
+                    title: '移除粉丝成功！',
                     type: "success",
                     timer: 1000,
                     showConfirmButton: false
                 });
-                $("#userTable").bootstrapTable('refresh', data);
+                $("#followTable").bootstrapTable('refresh', data);
             } else {
-                swal({title: '取消关注失败！',
+                swal({title: '移除粉丝失败！',
                     type:"error",
                     timer:1000,
                     showConfirmButton:false});
@@ -217,4 +189,3 @@ function cancelFollow(userId) {
     });
 
 }
-
