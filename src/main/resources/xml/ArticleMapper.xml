@@ -34,7 +34,11 @@
         on a.user_id = u.id
         left join category c
         on a.category_id = c.id
-        where a.user_id = #{userId}
+        <where>
+        <if test="userId != null and userId !=''" >
+            and  user_id = #{userId}
+        </if>
+    </where>
         order by a.create_time desc
                  limit #{offset},#{size}
 
@@ -71,15 +75,42 @@
 
     </select>
 
-    <select id="showArticleTitle" parameterType="long" resultType="com.spring.demo.entity.Article">
-        select title,
-               id articleId,
-               create_time createTime
-        from article
-        where user_id = #{userId}
+    <select id="showArticleTitle" parameterType="java.util.List" resultType="com.spring.demo.entity.Article">
+        SELECT title,
+        a.id articleId,
+        u.username authorName,
+        create_time createTime
+        from
+        article a
+        left join user u
+        on a.user_id = u.id
+        WHERE user_id in
+        <foreach item="item" index="index" collection="userIdList"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
         order by create_time desc
     </select>
 
 
 
+
+
 </mapper>
+        <!--SELECT-->
+        <!--title,-->
+        <!--id articleId,-->
+        <!--create_time createTime-->
+        <!--FROM-->
+        <!--article-->
+        <!--where-->
+        <!--<if test="userIdList != null and userIdList.size() != 0">-->
+
+        <!--user_id in-->
+        <!--<foreach collection="userIdList" item="userId"-->
+        <!--index="index" open="(" close=")" separator=",">-->
+        <!--                    #{userId}-->
+        <!--</foreach>-->
+        <!--</if>-->
+
+        <!--order by create_time desc-->

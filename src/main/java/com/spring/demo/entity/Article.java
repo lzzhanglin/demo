@@ -14,11 +14,21 @@ public class Article  {
 
     public String createTime;
 
+    public String authorName;
+
     public String content;
 
     public Long categoryId;
 
     public String categoryName;
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 
     public String getUsername() {
         return username;

@@ -1,5 +1,6 @@
 package com.spring.demo.service;
 
+import com.github.pagehelper.PageInfo;
 import com.spring.demo.entity.Article;
 import com.spring.demo.entity.Category;
 
@@ -16,7 +17,7 @@ public interface ArticleService {
 
     public Article viewArticleById(Long articleId);
 
-    public List<Article> showArticleTitle(Long userId);
+    public PageInfo showArticleTitle(Long userId, Integer pageNum, Integer pageSize);
 
 
 }

@@ -17,7 +17,11 @@
 
 <input type="hidden" id="pageInfo" th:value="${pageInfo}">
     <table class="table table-striped">
-
+        <tr>
+            <th>标题</th>
+            <th>作者</th>
+            <th>发表时间</th>
+        </tr>
 
         <tr th:each="article : ${pageInfo.list}">
 
@@ -30,6 +34,9 @@
                         <p th:text="${article.title}" ></p>
                     </a>
                 </td>
+            <td th:text="${article.authorName}"  id="authorName">
+
+            </td>
             <td th:text="${article.createTime}"  id="createTime">
 
             </td>
@@ -39,7 +46,7 @@
 
     <nav class="nav nav-pills pull-right" >
         <ul class="pagination" >
-            <li><a href="">&laquo;</a></li>
+            <li><a href="#">&laquo;</a></li>
 
             <li>
                 <a th:if="${not isFirstPage}" th:href="@{${'/home'}(pageNum=${pageNum-1},pageSize=${pageSize})}">Previous</a>

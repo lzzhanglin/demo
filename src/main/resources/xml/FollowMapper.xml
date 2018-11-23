@@ -135,4 +135,16 @@
         </where>
     </select>
 
+    <select id="getAllFollowList" parameterType="long" resultType="long">
+        select follow_user_id userId
+        from follow
+        <where>
+
+            <if test="userId != null and userId !=''" >
+                and  user_id = #{userId}
+            </if>
+
+        </where>
+    </select>
+
 </mapper>

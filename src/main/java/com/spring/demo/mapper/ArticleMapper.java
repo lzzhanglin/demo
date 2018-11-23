@@ -22,7 +22,7 @@ public interface ArticleMapper {
 
     public Article viewArticleById(Long articleId);
 
-    public List<Article> showArticleTitle(Long userId);
+    public List<Article> showArticleTitle(@Param("userIdList") List<Long> userIdList);
 
 
 }

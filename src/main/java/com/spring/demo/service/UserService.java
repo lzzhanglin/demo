@@ -18,6 +18,8 @@ public interface UserService {
 
     public boolean updatePwdByUsername(String username, String newPwd);
 
+    public Long getUserIdByName(String username);
+
 
 
 }

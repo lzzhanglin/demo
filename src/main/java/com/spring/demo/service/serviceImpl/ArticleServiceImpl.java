@@ -1,9 +1,14 @@
 package com.spring.demo.service.serviceImpl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.spring.demo.entity.Article;
 import com.spring.demo.entity.Category;
+import com.spring.demo.entity.User;
 import com.spring.demo.mapper.ArticleMapper;
+import com.spring.demo.mapper.FollowMapper;
 import com.spring.demo.service.ArticleService;
+import com.spring.demo.service.FollowService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
+    @Autowired
+    private FollowService followService;
+
+    @Autowired
+    private FollowMapper followMapper;
 
     @Autowired
     private ArticleMapper articleMapper;
@@ -47,9 +58,21 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.viewArticleById(articleId);
     }
 
-    public List<Article> showArticleTitle(Long userId) {
-        return articleMapper.showArticleTitle(userId);
+    public PageInfo showArticleTitle(Long userId,Integer pageNum, Integer pageSize) {
+        List<Long> userIdList = followMapper.getAllFollowList(userId);
+
+//        List<Article> articleList = articleMapper.showArticleTitle(userIdList);
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Article> articles = articleMapper.showArticleTitle(userIdList);
+
+        PageInfo pageInfo = new PageInfo(articles);
+        return pageInfo;
+
+
     }
+
+
 
 
 

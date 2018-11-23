@@ -23,12 +23,20 @@ page-helper{
     /*margin-top: 190px;*/
 /*}*/
 
+th {
+    font-size: 15px;
+    height: 50px;
+    text-align:center;
+}
 td {
     font-size: 20px;
     height: 50px;
     text-align:center;
 }
 td#createTime{
+    font-size: 12px;
+}
+td#authorName{
     font-size: 12px;
 }
 th{

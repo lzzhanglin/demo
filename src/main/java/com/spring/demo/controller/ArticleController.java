@@ -6,6 +6,7 @@ import com.spring.demo.entity.*;
 import com.spring.demo.mapper.ArticleMapper;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.ArticleService;
+import com.spring.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,9 @@ public class ArticleController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
+
+
 
     @Autowired
     private ArticleService articleService;
@@ -50,7 +53,7 @@ public class ArticleController {
 
         //articleId无值 则跳转该文章的新建页面
         if (Objects.equals(0l, articleId) ) {
-            Long userId = userMapper.getUserIdByName(username);
+            Long userId = userService.getUserIdByName(username);
             request.setAttribute("title", null);
             request.setAttribute("content", null);
             request.setAttribute("category", null);
@@ -69,7 +72,7 @@ public class ArticleController {
         request.setAttribute("title", article.getTitle());
         request.setAttribute("content", article.getContent());
         request.setAttribute("category", article.getCategoryId());
-        Long userId = userMapper.getUserIdByName(username);
+        Long userId = userService.getUserIdByName(username);
         request.setAttribute("userId",userId);
         return "/editArticle";
 
@@ -147,7 +150,7 @@ public class ArticleController {
     @RequestMapping("/manage")
     public String manageArticle(HttpServletRequest request,@AuthenticationPrincipal UserDetails user){
 
-        Long userId = userMapper.getUserIdByName(user.getUsername());
+        Long userId = userService.getUserIdByName(user.getUsername());
         request.setAttribute("userId",userId);
         return "/articleManage";
 

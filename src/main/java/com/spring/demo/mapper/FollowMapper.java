@@ -32,4 +32,6 @@ public interface FollowMapper {
     public int isFriendA(@Param("aUserId") Long aUserId, @Param("bUserId") Long bUserId);
 
     public int isFriendB(@Param("aUserId") Long aUserId, @Param("bUserId") Long bUserId);
+
+    public List<Long> getAllFollowList(@Param("userId") Long userId);
 }

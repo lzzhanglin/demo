@@ -87,14 +87,8 @@ public class LoginController {
                          @RequestParam(defaultValue = "1") Integer pageNum,
                          @RequestParam(defaultValue = "8") Integer pageSize) {
         Long userId = userMapper.getUserIdByName(user.getUsername());
-        PageHelper.startPage(pageNum, pageSize);
-        List<Article> titleList = articleService.showArticleTitle(userId);
 
-
-        
-        PageInfo pageInfo = new PageInfo(titleList);
-
-
+        PageInfo pageInfo = articleService.showArticleTitle(userId, pageNum, pageSize);
         request.setAttribute("pageNum", pageInfo.getPageNum());
         //获得一页显示的条数
         request.setAttribute("pageSize", pageInfo.getPageSize());
@@ -105,11 +99,11 @@ public class LoginController {
         //是否是最后一页
         request.setAttribute("isLastPage", pageInfo.isIsLastPage());
 
-
-
         request.setAttribute("pageInfo",pageInfo);
         return "/home";
     }
+
+
 
     @RequestMapping("/login")
     public String toLogin(HttpServletRequest request) {
