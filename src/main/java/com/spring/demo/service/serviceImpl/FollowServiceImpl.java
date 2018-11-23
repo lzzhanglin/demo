@@ -57,4 +57,14 @@ public class FollowServiceImpl implements FollowService {
             return false;
         }
     }
+
+    public boolean isFriend(Long aUserId,Long bUserId) {
+        int resultA = followMapper.isFriendA(aUserId, bUserId);
+        int resultB = followMapper.isFriendB(aUserId, bUserId);
+        if (resultA == 1 && resultB == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

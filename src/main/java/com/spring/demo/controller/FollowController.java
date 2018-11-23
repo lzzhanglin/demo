@@ -88,6 +88,11 @@ public class FollowController {
         List<SearchUser> userList = followService.getFollowList(userId,offset,size);
         for (SearchUser searchUser : userList) {
             searchUser.setIsFollowCurrentUser(1);
+            if (followService.isFriend(userId, searchUser.getUserId())) {
+                searchUser.setIsFriend(1);
+            } else {
+                searchUser.setIsFriend(0);
+            }
         }
         int total = followMapper.getFollowTotal(userId);
         ReturnPage<List<SearchUser>> returnPage = new ReturnPage<>(1,total,userList);
@@ -111,6 +116,11 @@ public class FollowController {
         List<SearchUser> userList = followService.getFollowerList(userId,offset,size);
         for (SearchUser searchUser : userList) {
             searchUser.setIsFollowCurrentUser(1);
+            if (followService.isFriend(userId, searchUser.getUserId())) {
+                searchUser.setIsFriend(1);
+            } else {
+                searchUser.setIsFriend(0);
+            }
         }
         int total = followMapper.getFollowerTotal(userId);
         ReturnPage<List<SearchUser>> returnPage = new ReturnPage<>(1,total,userList);
@@ -135,6 +145,8 @@ public class FollowController {
             return new Resp("failed", "remove failed");
         }
     }
+
+
 
 
 

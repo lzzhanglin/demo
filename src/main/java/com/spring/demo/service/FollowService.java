@@ -18,4 +18,6 @@ public interface FollowService {
     public List<SearchUser> getFollowerList(Long currentUserId,Long offset, Long size);
 
     public boolean removeFan(Long followUserId, Long userId);
+
+    public boolean isFriend(Long aUserId,Long bUserId);
 }

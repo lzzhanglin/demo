@@ -17,7 +17,12 @@ public class SearchUser {
 
     private String homeAddr;
 
+    //0表示未关注 1表示关注
     private Integer isFollowCurrentUser;
+
+
+    //是否互相关注
+    private Integer isFriend;
 
     public Long getUserId() {
         return userId;
@@ -89,5 +94,13 @@ public class SearchUser {
 
     public void setIsFollowCurrentUser(Integer isFollowCurrentUser) {
         this.isFollowCurrentUser = isFollowCurrentUser;
+    }
+
+    public Integer getIsFriend() {
+        return isFriend;
+    }
+
+    public void setIsFriend(Integer isFriend) {
+        this.isFriend = isFriend;
     }
 }

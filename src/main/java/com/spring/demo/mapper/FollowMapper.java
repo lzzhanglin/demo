@@ -28,4 +28,8 @@ public interface FollowMapper {
     public int getFollowerTotal(@Param("currentUserId") Long currentUserId);
 
     public int removeFan(@Param("followUserId") Long followUserId, @Param("userId") Long userId);
+
+    public int isFriendA(@Param("aUserId") Long aUserId, @Param("bUserId") Long bUserId);
+
+    public int isFriendB(@Param("aUserId") Long aUserId, @Param("bUserId") Long bUserId);
 }

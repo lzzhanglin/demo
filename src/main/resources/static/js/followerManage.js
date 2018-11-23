@@ -68,8 +68,16 @@ $('#followTable').bootstrapTable(
                         btnView = '<a class="btn-info btn-sm"  onclick="addFollow('+row.userId+')">关&nbsp;&nbsp;&nbsp;&nbsp;注</a>';
 
                     }
+                    if (row.isFriend == 1) {
+                        friendBtn = '<span class="btn-info btn-sm"  >互相关注</span>';
+                        cell = btnEdit + " " + btnView + " " + friendBtn;
+                    } else {
+
+                        friendBtn1 = '<span class="btn-info btn-sm"  >follower </span>';
+                        cell = btnEdit +" "+ btnView+ " "+ friendBtn1;
+
+                    }
                     // btnDel = '<button type="button" class="btn btn-danger btn-xs" onclick="deleteArticle('+row.articleId+')">删除</button>';
-                    cell = btnEdit +" " + btnView;
                     return cell;
                 },
             }],

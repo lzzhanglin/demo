@@ -108,4 +108,31 @@
         </where>
     </delete>
 
+    <select id="isFriendA" parameterType="map" resultType="int">
+        select count(id)
+        from follow
+        <where>
+            <if test="aUserId != null and aUserId !=''" >
+                and  follow_user_id = #{aUserId}
+            </if>
+            <if test="bUserId != null and bUserId !=''" >
+                and  user_id = #{bUserId}
+            </if>
+
+        </where>
+    </select>
+    <select id="isFriendB" parameterType="map" resultType="int">
+        select count(id)
+        from follow
+        <where>
+            <if test="bUserId != null and bUserId !=''" >
+                and  follow_user_id = #{bUserId}
+            </if>
+            <if test="aUserId != null and aUserId !=''" >
+                and  user_id = #{aUserId}
+            </if>
+
+        </where>
+    </select>
+
 </mapper>
