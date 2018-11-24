@@ -36,7 +36,7 @@
         on a.category_id = c.id
         <where>
         <if test="userId != null and userId !=''" >
-            and  user_id = #{userId}
+            and  a.user_id = #{userId}
         </if>
     </where>
         order by a.create_time desc
@@ -68,10 +68,13 @@
     <select id="viewArticleById" parameterType="long" resultType="com.spring.demo.entity.Article">
         select title ,
                content,
-               category_id categoryId
+               category_id categoryId,
+               username authorName
             from
-            article
-        where id = #{articleId}
+            article a
+            left join user u
+            on a.user_id = u.id
+        where a.id = #{articleId}
 
     </select>
 
@@ -84,12 +87,15 @@
         article a
         left join user u
         on a.user_id = u.id
-        WHERE user_id in
+        where user_id in
+        <if test="userIdList != null and userIdList.size() != 0">
         <foreach item="item" index="index" collection="userIdList"
                  open="(" separator="," close=")">
             #{item}
         </foreach>
-        order by create_time desc
+        </if>
+        order by a.create_time desc
+
     </select>
 
 
@@ -104,7 +110,7 @@
         <!--FROM-->
         <!--article-->
         <!--where-->
-        <!--<if test="userIdList != null and userIdList.size() != 0">-->
+
 
         <!--user_id in-->
         <!--<foreach collection="userIdList" item="userId"-->

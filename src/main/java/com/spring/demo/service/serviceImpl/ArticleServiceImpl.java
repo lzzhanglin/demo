@@ -60,6 +60,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     public PageInfo showArticleTitle(Long userId,Integer pageNum, Integer pageSize) {
         List<Long> userIdList = followMapper.getAllFollowList(userId);
+        userIdList.add(userId);
 
 //        List<Article> articleList = articleMapper.showArticleTitle(userIdList);
 
