@@ -2,10 +2,12 @@ package com.spring.demo.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageRowBounds;
 import com.spring.demo.entity.*;
 import com.spring.demo.mapper.ArticleMapper;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.ArticleService;
+import com.spring.demo.service.CommentService;
 import com.spring.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,9 @@ public class ArticleController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
 
 
@@ -195,14 +200,18 @@ public class ArticleController {
     }
 
     @RequestMapping("/show")
-    public String showArticle(HttpServletRequest request) {
+    public String showArticle(HttpServletRequest request,@AuthenticationPrincipal UserDetails user) {
         String aId = request.getParameter("id");
         if (Objects.equals(null, aId)) {
             throw new IllegalArgumentException("articleId为空");
         }
             Long articleId = Long.valueOf(aId);
         Article article = articleService.viewArticleById(articleId);
+        Long loginUserId = userService.getUserIdByName(user.getUsername());
+        List<Comment> commentList = commentService.showCommentByArticleId(articleId);
+        request.setAttribute("userId",loginUserId);
         request.setAttribute("article",article);
+        request.setAttribute("commentList",commentList);
         return "showArticle";
     }
 

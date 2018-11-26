@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace = "com.spring.demo.mapper.CommentMapper">
+
+        <insert id="saveComment"  parameterType="com.spring.demo.entity.Comment"
+                useGeneratedKeys="true" keyProperty="commentId">
+                insert into comments()
+                values (null,
+                #{comment,jdbcType=VARCHAR},
+                now(),
+                #{userId,jdbcType=BIGINT},
+                #{replyCommentId,jdbcType=BIGINT},
+                #{articleId,jdbcType=BIGINT})
+
+        </insert>
+
+        <select id="showCommentByArticleId" parameterType="long" resultType="com.spring.demo.entity.Comment">
+                select u.username,
+                c.create_time createTime,
+                c.comment comment
+                from comments c
+                left join user u
+                on c.user_id = u.id
+                where c.article_id = #{articleId}
+        </select>
+
+
+</mapper>

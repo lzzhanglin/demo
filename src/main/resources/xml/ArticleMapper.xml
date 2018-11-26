@@ -67,6 +67,7 @@
 
     <select id="viewArticleById" parameterType="long" resultType="com.spring.demo.entity.Article">
         select title ,
+                a.id articleId,
                content,
                category_id categoryId,
                username authorName
