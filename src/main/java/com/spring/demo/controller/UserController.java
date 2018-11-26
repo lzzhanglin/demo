@@ -49,7 +49,7 @@ public class UserController {
         User user1 = userService.queryUserProfile(username);
         request.setAttribute("user",user1);
 //        model.addAttribute("username", username);
-        return "/userCenter";
+        return "userCenter";
     }
 
     @RequestMapping("/saveProfile")
@@ -73,7 +73,7 @@ public class UserController {
 
     @RequestMapping("/changePwd")
     public String changePassword(HttpServletRequest request) {
-        return "/changePwd";
+        return "changePwd";
     }
 
     @RequestMapping("/changePwdPost")

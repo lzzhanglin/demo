@@ -1,3 +1,4 @@
+
 $('#followTable').bootstrapTable(
     {
         cache: false,
@@ -85,6 +86,17 @@ $('#followTable').bootstrapTable(
                 },
             }],
     });
+
+
+
+    $('#followTable').on('load-success.bs.table', function () {
+        var num = $('#followTable').bootstrapTable('getOptions').totalRows;
+        console.log("行数为：" + num);
+        if (num == 0) {
+            $("#tip").html('你还没有关注任何人哦，快去关注吧!');
+        }
+    })
+
 
 function viewUser(userId) {
     var data = {};

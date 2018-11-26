@@ -1,4 +1,4 @@
-$('#followTable').bootstrapTable(
+$('#followerTable').bootstrapTable(
     {
         cache: false,
         method: 'post',
@@ -83,6 +83,14 @@ $('#followTable').bootstrapTable(
             }],
     });
 
+    $('#followerTable').on('load-success.bs.table', function () {
+        var num = $('#followerTable').bootstrapTable('getOptions').totalRows;
+        console.log("行数为：" + num);
+        if (num == 0) {
+            $("#tip").html('还没有任何人关注你哦，快去写文章吸引小伙伴的关注吧!');
+        }
+    })
+
 function viewUser(userId) {
     var data = {};
     data.userId = userId;
@@ -146,7 +154,7 @@ function addFollow(userId) {
                     timer: 1000,
                     showConfirmButton: false
                 });
-                $("#followTable").bootstrapTable('refresh', data);
+                $("#followerTable").bootstrapTable('refresh', data);
             } else {
                 swal({title: '关注失败！',
                     type:"error",
@@ -184,7 +192,7 @@ function removeFan(userId) {
                     timer: 1000,
                     showConfirmButton: false
                 });
-                $("#followTable").bootstrapTable('refresh', data);
+                $("#followerTable").bootstrapTable('refresh', data);
             } else {
                 swal({title: '移除粉丝失败！',
                     type:"error",

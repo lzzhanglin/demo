@@ -26,6 +26,8 @@ $().ready(function() {
     validate.resetForm();
 
 });
-console.log("hello");
-
+var err = $("#error").val();
+if (err == "true") {
+    $("#tip").html('账号不存在或者密码错误！');
+}
 

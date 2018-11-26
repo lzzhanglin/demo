@@ -38,7 +38,7 @@ public class SearchController {
 
     @RequestMapping("/result")
     public String toResultPage(HttpServletRequest request) {
-        return "/searchResult";
+        return "searchResult";
     }
 
     @RequestMapping("/userList")

@@ -60,7 +60,7 @@ public class ArticleController {
             request.setAttribute("userId", userId);
             request.setAttribute("articleId",articleId);
 
-            return "/editArticle";
+            return "editArticle";
         } else {
 
 
@@ -74,7 +74,7 @@ public class ArticleController {
         request.setAttribute("category", article.getCategoryId());
         Long userId = userService.getUserIdByName(username);
         request.setAttribute("userId",userId);
-        return "/editArticle";
+        return "editArticle";
 
         }
     }
@@ -152,7 +152,7 @@ public class ArticleController {
 
         Long userId = userService.getUserIdByName(user.getUsername());
         request.setAttribute("userId",userId);
-        return "/articleManage";
+        return "articleManage";
 
     }
 
@@ -203,7 +203,7 @@ public class ArticleController {
             Long articleId = Long.valueOf(aId);
         Article article = articleService.viewArticleById(articleId);
         request.setAttribute("article",article);
-        return "/showArticle";
+        return "showArticle";
     }
 
 

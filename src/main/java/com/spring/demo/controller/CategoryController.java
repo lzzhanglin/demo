@@ -44,7 +44,7 @@ public class CategoryController {
     @RequestMapping("/manage")
     public String categoryManage(HttpServletRequest request) {
 
-        return "/categoryManage";
+        return "categoryManage";
     }
 
     @RequestMapping("/getCategoryList")

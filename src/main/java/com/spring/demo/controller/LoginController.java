@@ -100,21 +100,28 @@ public class LoginController {
         request.setAttribute("isLastPage", pageInfo.isIsLastPage());
 
         request.setAttribute("pageInfo",pageInfo);
-        return "/home";
+        return "home";
     }
 
 
 
     @RequestMapping("/login")
     public String toLogin(HttpServletRequest request) {
-        return "/login";
+        String error = request.getParameter("error");
+        logger.info("密码是否错误：{}",error);
+
+        if (Objects.equals("true", error)) {
+
+            request.setAttribute("error",error);
+        }
+        return "login";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register() {
 //        User userEntity = new User();
 //        model.addAttribute("user", userEntity);
-        return "/register";
+        return "register";
     }
 
 
@@ -132,21 +139,21 @@ public class LoginController {
         if (haveUsername) {
             Resp resp = new Resp("failed", "用户名已存在");
             request.setAttribute("resp",resp);
-            return "/register";
+            return "register";
         }
 
         boolean haveEmail = userService.isExistUsername(email);
         if (haveEmail) {
             Resp resp = new Resp("failed", "邮箱已被占用");
             request.setAttribute("resp",resp);
-            return "/register";
+            return "register";
         }
         String password = request.getParameter("password");
         String passwordR = request.getParameter("passwordR");
         if (!password.equals(passwordR)) {
             Resp resp = new Resp("failed", "两次输入的密码不一致");
             request.setAttribute("resp",resp);
-            return "/register";
+            return "register";
         }
         User user = new User();
         user.setUsername(username);
@@ -154,7 +161,7 @@ public class LoginController {
         user.setPassword(passwordEncoder.encode(password));
         userService.register(user);
         Resp resp = new Resp("success", "register success");
-        return ("/login");
+        return ("login");
 
     }
 
@@ -193,7 +200,7 @@ public class LoginController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        return "redirect:login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
 //    @GetMapping("/me")

@@ -11,7 +11,7 @@ public class BaseErrorController implements ErrorController {
     @Override
     public String getErrorPath() {
         logger.info("进入自定义错误页面");
-        return "/error";
+        return "error";
     }
 
     @RequestMapping
