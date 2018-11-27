@@ -68,6 +68,12 @@ $('#table').bootstrapTable(
             }],
     });
 
+$('#table').on('load-success.bs.table', function () {
+    var num = $('#table').bootstrapTable('getOptions').totalRows;
+    if (num == 0) {
+        $("#tip").html('你还没有分类哦，快去新建吧!');
+    }
+})
 
 $("#newCategoryBtn").click(function () {
     $("#categoryName").val("");
@@ -135,7 +141,7 @@ $("#updateCategoryBtn").click(function () {
                         type:"success",
                         timer:1000,
                         showConfirmButton:false});
-
+                    $("#tip").html(' ');
 
                 }
                 else{

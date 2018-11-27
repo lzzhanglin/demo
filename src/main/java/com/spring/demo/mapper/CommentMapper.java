@@ -10,4 +10,10 @@ public interface CommentMapper {
     public int saveComment(Comment comment);
 
         public List<Comment> showCommentByArticleId(Long articleId);
+
+    public String getPostTime(Long commentId);
+
+    public String getCommentPoster(Long commentId);
+
+    public String getCommentById(Long commentId);
 }

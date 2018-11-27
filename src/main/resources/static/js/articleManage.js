@@ -93,6 +93,15 @@ $('#table').bootstrapTable(
 });
 
 
+
+$('#table').on('load-success.bs.table', function () {
+    var num = $('#table').bootstrapTable('getOptions').totalRows;
+    console.log("行数为：" + num);
+    if (num == 0) {
+        $("#tip").html('你还没有写文章哦，快去writing吧!');
+    }
+})
+
 function viewArticle(articleId) {
     var data = {};
     data.articleId = articleId;

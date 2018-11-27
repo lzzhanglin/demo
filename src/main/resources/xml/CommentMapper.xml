@@ -17,7 +17,9 @@
         </insert>
 
         <select id="showCommentByArticleId" parameterType="long" resultType="com.spring.demo.entity.Comment">
-                select u.username,
+                select
+                c.id commentId,
+                u.username,
                 c.create_time createTime,
                 c.comment comment
                 from comments c
@@ -26,5 +28,24 @@
                 where c.article_id = #{articleId}
         </select>
 
+        <select id="getPostTime" resultType="string" parameterType="long">
+                select create_time createTime
+                from comments
+                where
+                id = #{commentId}
+        </select>
+
+        <select id="getCommentPoster" parameterType="long" resultType="string">
+                select u.username
+                from comments c
+                left join user u
+                on c.user_id = u.id
+                where c.id = #{commentId}
+        </select>
+        <select id="getCommentById" resultType="string" parameterType="long">
+                select comment
+                from comments
+                where id = #{commentId}
+        </select>
 
 </mapper>

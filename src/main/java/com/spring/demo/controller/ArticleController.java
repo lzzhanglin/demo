@@ -209,6 +209,10 @@ public class ArticleController {
         Article article = articleService.viewArticleById(articleId);
         Long loginUserId = userService.getUserIdByName(user.getUsername());
         List<Comment> commentList = commentService.showCommentByArticleId(articleId);
+        for (Comment c : commentList) {
+            Long cId = c.getCommentId();
+            logger.info(c.getComment());
+        }
         request.setAttribute("userId",loginUserId);
         request.setAttribute("article",article);
         request.setAttribute("commentList",commentList);

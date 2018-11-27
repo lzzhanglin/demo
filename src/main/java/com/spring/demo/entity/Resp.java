@@ -1,25 +1,25 @@
 package com.spring.demo.entity;
 
-public class Resp {
+public class Resp<T> {
     private String status;
 
     private String msg;
 
-    private String data;
+    private T data;
 
 
 
-    public Resp(String status, String msg, String data) {
+    public Resp(String status, String msg, T data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
     }
 
-    public String getData() {
+    public  T getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(T data) {
         this.data = data;
     }
 

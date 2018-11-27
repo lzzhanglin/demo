@@ -1,3 +1,11 @@
+$().ready(function () {
+    var num = $("#commentTable").find("tr").length;
+    console.log(num);
+    if (num == 1) {
+        $("#tip").html('还没有评论哦,快留下第一条评论吧！');
+    }
+})
+
 $("#postCommentBtn").click(function () {
     var data = {};
     var userId = $("#userId").val();
@@ -18,6 +26,7 @@ $("#postCommentBtn").click(function () {
         // contentType: "application/x-www-form-urlencoded",
         // contentType: "application/json;charset=utf-8",
         success: function (data) {
+
             if (data.status == "success") {
                 swal({
                     title: '发表成功！',
@@ -26,6 +35,23 @@ $("#postCommentBtn").click(function () {
                     showConfirmButton: false
                 });
                 $("#comment").val('');
+                var tableId = 'commentTable';
+                $("#tip").html('');
+
+                var tableRowData = {};
+                tableRowData.username = data.msg;
+                tableRowData.comment = comment;
+                tableRowData.createTime = data.data.createTime;
+                tableRowData.commentId = data.data.commentId;
+                var insertTr = $('#' + tableId + ' tr:last').clone(true);
+                var tableLength = $("#" + tableId).find("tr").length;
+                // 将json数据循环追加到表的每一列
+                    insertTr.children('td').eq(0).html(tableRowData.username);
+                    insertTr.children('td').eq(1).html(tableRowData.comment);
+                    insertTr.children('td').eq(2).html(tableRowData.createTime);
+                    insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>");
+                $('#' + tableId + ' tr:last').after(insertTr);
+//                 window.location.reload();
             } else if (data.status == "userIdError") {
                 swal({
                     title: 'userId为空！',
@@ -41,7 +67,14 @@ $("#postCommentBtn").click(function () {
                     timer: 1000,
                     showConfirmButton: false
                 });
-            } else {
+            } else  if (data.status = "commentNull") {
+                swal({
+                    title: '评论不能为空！',
+                    type: "error",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            }else {
                 swal({
                     title: '发表失败！',
                     type: "error",
@@ -57,3 +90,106 @@ $("#postCommentBtn").click(function () {
     });
 
 })
+
+
+function reply(commentId) {
+    // var commentId=$(this).parents("tr").find("td").eq(3).text();
+    $("#commentIdH").val(commentId);
+    $("#replyModal").modal('show');
+
+}
+
+// var tableIndex = -1;
+// $("#commentTable tr").click(function() {
+//     tableIndex = $(this).parent().find("tr").index($(this)[0]); //所获取的当前行的行号
+//
+// });
+
+$("#replyBtn").click(function () {
+    var data = {};
+    var replyCommentId = $("#commentIdH").val();
+    var userId = $("#userId").val();
+    var comment = $("#replyComment").val();
+    var articleId = $("#articleId").val();
+    data.userId = userId;
+    data.comment = comment;
+    data.articleId = articleId;
+    data.replyCommentId = replyCommentId;
+    console.log(data);
+
+    $.ajax({
+        type: "POST",
+        url: "/comment/saveReply",
+        // async:false,
+        data: data,
+
+        //type、contentType必填,指明传参方式
+        dataType: "json",
+
+        // contentType: "application/x-www-form-urlencoded",
+        // contentType: "application/json;charset=utf-8",
+        success: function (data) {
+
+            if (data.status == "success") {
+                swal({
+                    title: '发表成功！',
+                    type: "success",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+                $("#replyModal").modal('hide');
+                $("#replyComment").val('');
+
+                var tableId = 'commentTable';
+                var tableRowData = {};
+                tableRowData.username = data.msg;
+                tableRowData.comment = data.data.comment;
+                tableRowData.createTime = data.data.createTime;
+                tableRowData.commentId = data.data.commentId;
+                var insertTr = $('#' + tableId + ' tr:last').clone(true);
+                // 将json数据循环追加到表的每一列
+                insertTr.children('td').eq(0).html(tableRowData.username);
+                insertTr.children('td').eq(1).html(tableRowData.comment);
+                insertTr.children('td').eq(2).html(tableRowData.createTime);
+                insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>");
+                $('#' + tableId + ' tr:last').after(insertTr);
+            } else if (data.status == "userIdError") {
+                swal({
+                    title: 'userId为空！',
+                    type: "error",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            }
+            else if (data.status == "articleIdError") {
+                swal({
+                    title: 'article为空！',
+                    type: "error",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            } else  if (data.status = "commentNull") {
+                swal({
+                    title: '回复不能为空！',
+                    type: "error",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            }else{
+                swal({
+                    title: '发表失败！',
+                    type: "error",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            }
+
+
+
+
+        }
+    });
+
+})
+
+
