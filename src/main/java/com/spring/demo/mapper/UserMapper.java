@@ -33,4 +33,6 @@ public interface UserMapper {
     public int searchUserTotal(@Param("keyWord") String keyWord);
 
     public SearchUser viewUser(Long userId);
+
+    public User getUsernameById(Long userId);
 }

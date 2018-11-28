@@ -1,6 +1,5 @@
 $().ready(function () {
     var num = $("#commentTable").find("tr").length;
-    console.log(num);
     if (num == 1) {
         $("#tip").html('还没有评论哦,快留下第一条评论吧！');
     }
@@ -40,13 +39,14 @@ $("#postCommentBtn").click(function () {
 
                 var tableRowData = {};
                 tableRowData.username = data.msg;
+                tableRowData.userId = data.data.userId;
                 tableRowData.comment = comment;
                 tableRowData.createTime = data.data.createTime;
                 tableRowData.commentId = data.data.commentId;
                 var insertTr = $('#' + tableId + ' tr:last').clone(true);
                 var tableLength = $("#" + tableId).find("tr").length;
                 // 将json数据循环追加到表的每一列
-                    insertTr.children('td').eq(0).html(tableRowData.username);
+                    insertTr.children('td').eq(0).html("<a href='/user/show?userId="+tableRowData.userId+"'>"+tableRowData.username+"</a>");
                     insertTr.children('td').eq(1).html(tableRowData.comment);
                     insertTr.children('td').eq(2).html(tableRowData.createTime);
                     insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>");
@@ -115,7 +115,6 @@ $("#replyBtn").click(function () {
     data.comment = comment;
     data.articleId = articleId;
     data.replyCommentId = replyCommentId;
-    console.log(data);
 
     $.ajax({
         type: "POST",
@@ -142,13 +141,14 @@ $("#replyBtn").click(function () {
 
                 var tableId = 'commentTable';
                 var tableRowData = {};
+                tableRowData.userId = data.data.userId;
                 tableRowData.username = data.msg;
                 tableRowData.comment = data.data.comment;
                 tableRowData.createTime = data.data.createTime;
                 tableRowData.commentId = data.data.commentId;
                 var insertTr = $('#' + tableId + ' tr:last').clone(true);
                 // 将json数据循环追加到表的每一列
-                insertTr.children('td').eq(0).html(tableRowData.username);
+                insertTr.children('td').eq(0).html("<a href='/user/show?userId="+tableRowData.userId+"'>"+tableRowData.username+"</a>");
                 insertTr.children('td').eq(1).html(tableRowData.comment);
                 insertTr.children('td').eq(2).html(tableRowData.createTime);
                 insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>");

@@ -19,13 +19,14 @@
 
     <div style="width:300px; height:auto; float:left; display:inline">
         <p3>用户名：</p3>
-        <p3 th:text = "${username}"></p3>
+        <p3 th:text = "${user.username}" style="color: #00b4ef"></p3>
     </div>
     <div style="width:300px; height:auto; float:left; display:inline">
      <p3>文章：</p3>
-        <p3 th:text = "${articleNum}"></p3>
+        <p3 th:text = "${user.articleNum}" style="color: #00b4ef"></p3>
 
     </div>
+    <input type="hidden" id="isMyPage" name="isMyPage" th:value = "${isMyPage}">
     <input type="hidden" id="pageInfo" th:value="${articleList}">
     <table class="table table-striped" id="userPageTable">
         <tr>

@@ -24,6 +24,16 @@ public class SearchUser {
     //是否互相关注
     private Integer isFriend;
 
+    private Long articleNum;
+
+    public Long getArticleNum() {
+        return articleNum;
+    }
+
+    public void setArticleNum(Long articleNum) {
+        this.articleNum = articleNum;
+    }
+
     public Long getUserId() {
         return userId;
     }

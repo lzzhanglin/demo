@@ -29,7 +29,8 @@
                title,
                c.category_name categoryName,
                a.create_time createTime,
-               content
+               content,
+               comment_num commentNum
             from article a
         left join user u
         on a.user_id = u.id

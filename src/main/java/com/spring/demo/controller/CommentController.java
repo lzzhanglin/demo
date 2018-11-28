@@ -63,6 +63,7 @@ public class CommentController {
             Map<String, Object> hashMap = new HashMap<>();
             hashMap.put("createTime", createTime1);
             hashMap.put("commentId", commentEntity.getCommentId());
+            hashMap.put("userId", userId);
 
             return new Resp("success", user.getUsername(),hashMap);
         } else {
@@ -120,6 +121,7 @@ public class CommentController {
             hashMap.put("replyCommentId", commentEntity.getReplyCommentId());
             hashMap.put("username", commentMapper.getCommentPoster(replyCommentId));
             hashMap.put("comment", commentEntity.getComment());
+            hashMap.put("userId", userId);
             return new Resp("success", user.getUsername(),hashMap);
         } else {
             return new Resp("failed", "post comment failed");

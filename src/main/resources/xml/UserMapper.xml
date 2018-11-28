@@ -62,6 +62,7 @@
 
     <select id="searchUser" parameterType="map" resultType="com.spring.demo.entity.SearchUser">
         select id userId,
+              article_num articleNum,
                username
         from user
         <where>
@@ -95,6 +96,12 @@
                school,
                `describe`
           from user
+        where id = #{userId}
+    </select>
+    <select id="getUsernameById" parameterType="long" resultType="com.spring.demo.entity.User">
+        select username,
+        article_num articleNum
+        from user
         where id = #{userId}
     </select>
 </mapper>

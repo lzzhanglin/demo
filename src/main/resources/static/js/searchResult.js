@@ -63,6 +63,12 @@ $('#userTable').bootstrapTable(
                                   return value
                               } */
             },
+            {   field:'articleNum',
+                title:'文章',
+                align:'center',
+                showSelectTitle:true,
+
+            },
             {
                 field: 'operation',
                 title: '操作',

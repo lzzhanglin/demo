@@ -78,6 +78,12 @@ $('#table').bootstrapTable(
             visible:true,
             align:'center',
         },
+        {
+            field:'commentNum',
+            title:'评论',
+            visible:true,
+            align:'center',
+        },
               {
                  field: 'operation',
                  title: '操作',

@@ -123,14 +123,27 @@ public class UserController {
     }
 
     @RequestMapping("/show")
-    public String showUser(HttpServletRequest request) {
+    public String showUser(HttpServletRequest request,
+                           @AuthenticationPrincipal UserDetails userDetails) {
         String uId = request.getParameter("userId");
         if (Objects.equals(null, uId) || Objects.equals("", uId)) {
             throw new IllegalArgumentException("userId为空");
         }
+        //当前登录的用户id
+        Long userDetailId = userMapper.getUserIdByName(userDetails.getUsername());
+        //要查看的用户id
         Long userId = Long.valueOf(uId);
+        //是否查看的是当前登录用户的主页 0表示不是 1表示是
+        Integer isMyPage = 0;
+        if (userDetailId == userId) {
+            isMyPage = 1;
+        }
+        User user = userMapper.getUsernameById(userId);
+
         List<Article> articleList = articleMapper.getAllArticleList(userId);
         request.setAttribute("articleList",articleList);
+        request.setAttribute("user",user);
+        request.setAttribute("isMyPage",isMyPage);
         return "showUser";
     }
 

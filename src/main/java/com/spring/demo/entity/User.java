@@ -34,6 +34,15 @@ public class User implements UserDetails, Serializable {
 
     private String describe;
 
+    private Long articleNum;
+
+    public Long getArticleNum() {
+        return articleNum;
+    }
+
+    public void setArticleNum(Long articleNum) {
+        this.articleNum = articleNum;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
