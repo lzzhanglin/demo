@@ -3,6 +3,7 @@ package com.spring.demo.controller;
 
 import com.spring.demo.entity.Comment;
 import com.spring.demo.entity.Resp;
+import com.spring.demo.mapper.ArticleMapper;
 import com.spring.demo.mapper.CommentMapper;
 import com.spring.demo.service.CommentService;
 import org.omg.CORBA.OBJ_ADAPTER;
@@ -27,6 +28,9 @@ public class CommentController {
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @RequestMapping("/save")
     @ResponseBody
@@ -126,5 +130,23 @@ public class CommentController {
         } else {
             return new Resp("failed", "post comment failed");
         }
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Resp deleteComment(HttpServletRequest request) {
+        String cId = request.getParameter("commentId");
+        if (Objects.equals(null, cId) || Objects.equals("", cId)) {
+            return new Resp("failed", "commentId is null");
+        }
+        Long articleId = articleMapper.getArticleIdByCommentId(Long.valueOf(cId));
+        boolean result = commentService.deleteComment(Long.valueOf(cId));
+        if (result) {
+            articleMapper.restoreCommentNum(articleId);
+            return new Resp("success", "delete success");
+        } else {
+            return new Resp("failed", "delete failed");
+        }
+
     }
 }

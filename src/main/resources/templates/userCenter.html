@@ -39,13 +39,27 @@
 
 
     <!--<div class="form-horizontal">-->
+        <p3></p3>
+        <fieldset>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">用户名:</label>
+
+                <div class="col-sm-7 input-group">
+                    <input type="text" class="form-control" name="nickname" id="username" th:value="*{user.username}">
+
+                    <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                </div>
+            </div>
+        </fieldset>
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2 control-label">昵 称:</label>
 
                 <div class="col-sm-7 input-group">
                     <input type="text" class="form-control" name="nickname" id="nickname" th:value="*{user.nickname}">
-                    <input type="hidden" id="username" th:value="*{user.username}">
+                    <!--<input type="hidden" id="username" th:value="*{user.username}">-->
 
                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-user"></span>

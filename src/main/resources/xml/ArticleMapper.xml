@@ -72,7 +72,8 @@
                 a.id articleId,
                content,
                category_id categoryId,
-               username authorName
+               username authorName,
+               user_id userId
             from
             article a
             left join user u
@@ -120,6 +121,17 @@
         set comment_num = comment_num + 1
         where id = #{articleId}
     </update>
+
+    <update id="restoreCommentNum" parameterType="long">
+        update article
+        set comment_num = comment_num - 1
+        where id = #{articleId}
+    </update>
+    <select id="getArticleIdByCommentId" parameterType="long" resultType="long">
+        select article_id
+        from comments
+        where id = #{commentId}
+    </select>
 
 
 

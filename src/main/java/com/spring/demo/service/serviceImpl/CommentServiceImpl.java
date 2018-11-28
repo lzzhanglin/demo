@@ -31,4 +31,9 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> showCommentByArticleId(Long articleId) {
         return commentMapper.showCommentByArticleId(articleId);
     }
+
+    public boolean deleteComment(Long commentId) {
+        int resultRow = commentMapper.deleteComment(commentId);
+        return resultRow == 1 ? true : false;
+    }
 }

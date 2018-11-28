@@ -51,7 +51,7 @@
 
     </div>
 <div style="margin-bottom: 50px"></div>
-    <table class="table table-striped" id="commentTable" style="margin-top: 50px">
+    <table class="table table-striped" id="commentTable" style="margin-top: 50px" cellspacing="10px">
         <!--<tr>-->
             <!--<th><label></label></th>-->
             <!--<th><label></label></th>-->
@@ -84,10 +84,13 @@
             </td>
             <td th:value="${comment.commentId}"  id="commentId">
                 <button class="btn btn-info" type="button" th:onclick="'javascript:reply('+${comment.commentId}+')'">reply</button>
-            <!--<a th:href="@{/comment/reply(id=${comment.commentId})}">-->
-                <!--<p>回复</p>-->
-            <!--</a>-->
+                <!--如果是自己发表的评论 可以删除-->
+                <button class="btn btn-warning" type="button" th:onclick="'javascript:deleteComment('+${comment.commentId}+')'"
+                        th:if="${comment.isCurrentUserCreated} == 1">delete</button>
+
+
             </td>
+
             <!--</div>-->
         </tr>
     </table>

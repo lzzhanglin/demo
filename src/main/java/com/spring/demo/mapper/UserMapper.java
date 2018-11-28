@@ -35,4 +35,12 @@ public interface UserMapper {
     public SearchUser viewUser(Long userId);
 
     public User getUsernameById(Long userId);
+
+    public int restoreArticleNum(Long userId);
+
+    public Long getUserIdByArticleId(Long articleId);
+
+    public int updateArticleNum(Long userId);
 }
+
+

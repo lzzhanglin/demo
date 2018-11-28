@@ -16,4 +16,6 @@ public interface CommentMapper {
     public String getCommentPoster(Long commentId);
 
     public String getCommentById(Long commentId);
+
+    public int deleteComment(Long commentId);
 }

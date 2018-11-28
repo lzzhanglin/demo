@@ -104,4 +104,22 @@
         from user
         where id = #{userId}
     </select>
+
+    <update id="restoreArticleNum" parameterType="long">
+        update user
+        set article_num = article_num - 1
+        where id = #{userId}
+    </update>
+
+    <select id="getUserIdByArticleId" parameterType="long" resultType="long">
+        select user_id
+        from article
+        where id = #{articleId}
+    </select>
+
+    <update id="updateArticleNum" parameterType="long">
+        update user
+        set article_num = article_num + 1
+        where id = #{userId}
+    </update>
 </mapper>

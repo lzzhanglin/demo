@@ -49,7 +49,8 @@ $("#postCommentBtn").click(function () {
                     insertTr.children('td').eq(0).html("<a href='/user/show?userId="+tableRowData.userId+"'>"+tableRowData.username+"</a>");
                     insertTr.children('td').eq(1).html(tableRowData.comment);
                     insertTr.children('td').eq(2).html(tableRowData.createTime);
-                    insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>");
+                    insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>"
+                    +" "+"<button class='btn btn-warning' type='button' onclick='deleteComment("+tableRowData.commentId+")'>delete</button>");
                 $('#' + tableId + ' tr:last').after(insertTr);
 //                 window.location.reload();
             } else if (data.status == "userIdError") {
@@ -91,6 +92,63 @@ $("#postCommentBtn").click(function () {
 
 })
 
+var tableIndex = -1;
+$("#commentTable tr").click(function() {
+    tableIndex = $(this).parent().find("tr").index($(this)[0]); //所获取的当前行的行号
+
+});
+function deleteComment(commentId) {
+    var data = {};
+    data.commentId = commentId;
+    swal({
+        title: '确定删除吗？',
+        text: '你将无法恢复它！',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '确定删除！',
+    }).then(function(isConfirm){
+        if (isConfirm.dismiss != 'cancel') {
+            $.ajax({
+                type: "POST",
+                url: "/comment/delete",
+                // async:false,
+                data: data,
+
+                //type、contentType必填,指明传参方式
+                // dataType: "json",
+
+                contentType: "application/x-www-form-urlencoded",
+                // contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data.status == "failed") {
+                        swal({title: '删除失败！',
+                            type:"error",
+                            timer:1000,
+                            showConfirmButton:false});
+
+                    } else {
+                        swal({
+
+                            title:'评论已被删除！',
+                            type: "success",
+                            timer: 1000,
+                            showConfirmButton: false});
+                        document.getElementById('commentTable').deleteRow(tableIndex)
+
+
+
+                    }
+                }
+            });
+
+        }
+
+
+    })
+
+}
 
 function reply(commentId) {
     // var commentId=$(this).parents("tr").find("td").eq(3).text();
@@ -99,11 +157,7 @@ function reply(commentId) {
 
 }
 
-// var tableIndex = -1;
-// $("#commentTable tr").click(function() {
-//     tableIndex = $(this).parent().find("tr").index($(this)[0]); //所获取的当前行的行号
-//
-// });
+
 
 $("#replyBtn").click(function () {
     var data = {};
@@ -151,7 +205,8 @@ $("#replyBtn").click(function () {
                 insertTr.children('td').eq(0).html("<a href='/user/show?userId="+tableRowData.userId+"'>"+tableRowData.username+"</a>");
                 insertTr.children('td').eq(1).html(tableRowData.comment);
                 insertTr.children('td').eq(2).html(tableRowData.createTime);
-                insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>");
+                insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>"
+                +" "+"<button class='btn btn-warning' type='button' onclick='deleteComment("+tableRowData.commentId+")'>delete</button>");
                 $('#' + tableId + ' tr:last').after(insertTr);
             } else if (data.status == "userIdError") {
                 swal({

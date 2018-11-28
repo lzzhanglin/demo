@@ -28,5 +28,9 @@ public interface ArticleMapper {
 
     public int updateCommentNum(Long articleId);
 
+    int  restoreCommentNum(Long articleId);
+
+    Long getArticleIdByCommentId(Long commentId);
+
 
 }

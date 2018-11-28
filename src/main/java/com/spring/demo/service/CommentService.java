@@ -9,4 +9,6 @@ public interface CommentService {
     public boolean savaComment(Comment comment);
 
     public List<Comment> showCommentByArticleId(Long articleId);
+
+    public boolean deleteComment(Long commentId);
 }

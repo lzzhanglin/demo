@@ -16,6 +16,18 @@ public class Comment {
 
     private Long articleId;
 
+    //如果是0 则不是当前登录用户发表的评论
+    //如果是1 则是当前用户发表的评论，可以进行删除操作
+    private Long isCurrentUserCreated;
+
+    public Long getIsCurrentUserCreated() {
+        return isCurrentUserCreated;
+    }
+
+    public void setIsCurrentUserCreated(Long isCurrentUserCreated) {
+        this.isCurrentUserCreated = isCurrentUserCreated;
+    }
+
     public String getUsername() {
         return username;
     }

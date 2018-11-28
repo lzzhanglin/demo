@@ -45,6 +45,9 @@ public class ArticleController {
     @Autowired
     private ArticleMapper articleMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @RequestMapping("/edit")
     public String toEditArticle(HttpServletRequest request,@AuthenticationPrincipal UserDetails user) {
         String username = user.getUsername();
@@ -110,6 +113,7 @@ public class ArticleController {
         }
         Long articleId = articleService.saveArticle(article);
         if (!Objects.equals(null, articleId)) {
+            userMapper.updateArticleNum(userId);
             return new Resp("success", "save success",articleId.toString());
         } else {
             return new Resp("failed", "save failed");
@@ -182,7 +186,9 @@ public class ArticleController {
         String str = request.getParameter("articleId");
         Long articleId = Long.valueOf(str);
         int resultRow = articleService.deleteArticle(articleId);
+        Long userId = userMapper.getUserIdByArticleId(articleId);
         if (resultRow == 1) {
+            userMapper.restoreArticleNum(userId);
             return new Resp("success", "delete article success");
         } else {
             return new Resp("failed", "delete article failed");
@@ -210,9 +216,14 @@ public class ArticleController {
         Long loginUserId = userService.getUserIdByName(user.getUsername());
         List<Comment> commentList = commentService.showCommentByArticleId(articleId);
         for (Comment c : commentList) {
-            Long cId = c.getCommentId();
-            logger.info(c.getComment());
-            logger.info(c.getUserId().toString());
+            Long uId = c.getUserId();
+            //如果评论的发表者就是当前登录用户 既可以进行删除评论
+            //如果当前登录用户是该文章作者 同样可以进行删除的操作
+            if (uId == loginUserId || loginUserId == article.getUserId()) {
+                c.setIsCurrentUserCreated(1l);
+            } else {
+                c.setIsCurrentUserCreated(0l);
+            }
         }
         request.setAttribute("userId",loginUserId);
         request.setAttribute("article",article);

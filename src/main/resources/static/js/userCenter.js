@@ -55,6 +55,7 @@ $().ready(function(){
 
     //
     $("#nickname").attr("readonly","readonly");
+    $("#username").attr("readonly","readonly");
     $("#phone").attr("readonly","readonly");
     $("#birthday").attr("readonly","readonly");
     $("#homeAddr").attr("readonly","readonly");

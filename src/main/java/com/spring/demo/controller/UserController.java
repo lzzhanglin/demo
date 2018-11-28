@@ -126,17 +126,24 @@ public class UserController {
     public String showUser(HttpServletRequest request,
                            @AuthenticationPrincipal UserDetails userDetails) {
         String uId = request.getParameter("userId");
+        Long userId = 0l;
+        //是否查看的是当前登录用户的主页 0表示不是 1表示是
+        Integer isMyPage = 0;
+
+        //如果参数为空 则是在导航栏点击进来的 查看当前登录用户首页
         if (Objects.equals(null, uId) || Objects.equals("", uId)) {
-            throw new IllegalArgumentException("userId为空");
+            userId = userMapper.getUserIdByName(userDetails.getUsername());
+            isMyPage = 1;
+        } else {
+            //要查看的用户id
+            userId = Long.valueOf(uId);
         }
         //当前登录的用户id
         Long userDetailId = userMapper.getUserIdByName(userDetails.getUsername());
-        //要查看的用户id
-        Long userId = Long.valueOf(uId);
-        //是否查看的是当前登录用户的主页 0表示不是 1表示是
-        Integer isMyPage = 0;
+
         if (userDetailId == userId) {
             isMyPage = 1;
+
         }
         User user = userMapper.getUsernameById(userId);
 

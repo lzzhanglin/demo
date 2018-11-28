@@ -48,5 +48,11 @@
                 from comments
                 where id = #{commentId}
         </select>
+        <delete id="deleteComment" parameterType="long">
+                delete from
+                comments
+                where
+                id = #{commentId}
+        </delete>
 
 </mapper>
