@@ -49,8 +49,8 @@ $("#postCommentBtn").click(function () {
                     insertTr.children('td').eq(0).html("<a href='/user/show?userId="+tableRowData.userId+"'>"+tableRowData.username+"</a>");
                     insertTr.children('td').eq(1).html(tableRowData.comment);
                     insertTr.children('td').eq(2).html(tableRowData.createTime);
-                    insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>"
-                    +" "+"<button class='btn btn-warning' type='button' onclick='deleteComment("+tableRowData.commentId+")'>delete</button>");
+                    insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>Reply</button>"
+                    +" "+"<button class='btn btn-warning' type='button' onclick='deleteComment("+tableRowData.commentId+")'>Delete</button>");
                 $('#' + tableId + ' tr:last').after(insertTr);
 //                 window.location.reload();
             } else if (data.status == "userIdError") {
@@ -205,8 +205,8 @@ $("#replyBtn").click(function () {
                 insertTr.children('td').eq(0).html("<a href='/user/show?userId="+tableRowData.userId+"'>"+tableRowData.username+"</a>");
                 insertTr.children('td').eq(1).html(tableRowData.comment);
                 insertTr.children('td').eq(2).html(tableRowData.createTime);
-                insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>reply</button>"
-                +" "+"<button class='btn btn-warning' type='button' onclick='deleteComment("+tableRowData.commentId+")'>delete</button>");
+                insertTr.children('td').eq(3).html("<button class='btn btn-info' type='button' onclick='reply("+tableRowData.commentId+")'>Reply</button>"
+                +" "+"<button class='btn btn-warning' type='button' onclick='deleteComment("+tableRowData.commentId+")'>Delete</button>");
                 $('#' + tableId + ' tr:last').after(insertTr);
             } else if (data.status == "userIdError") {
                 swal({

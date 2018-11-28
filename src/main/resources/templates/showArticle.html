@@ -83,10 +83,10 @@
 
             </td>
             <td th:value="${comment.commentId}"  id="commentId">
-                <button class="btn btn-info" type="button" th:onclick="'javascript:reply('+${comment.commentId}+')'">reply</button>
+                <button class="btn btn-info" type="button" th:onclick="'javascript:reply('+${comment.commentId}+')'">Reply</button>
                 <!--如果是自己发表的评论 可以删除-->
                 <button class="btn btn-warning" type="button" th:onclick="'javascript:deleteComment('+${comment.commentId}+')'"
-                        th:if="${comment.isCurrentUserCreated} == 1">delete</button>
+                        th:if="${comment.isCurrentUserCreated} == 1">Delete</button>
 
 
             </td>
