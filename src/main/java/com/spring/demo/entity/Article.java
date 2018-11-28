@@ -22,6 +22,16 @@ public class Article  {
 
     public String categoryName;
 
+    public Integer commentNum;
+
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
+    }
+
     public String getAuthorName() {
         return authorName;
     }

@@ -21,7 +21,8 @@
                 c.id commentId,
                 u.username,
                 c.create_time createTime,
-                c.comment comment
+                c.comment comment,
+                c.user_id userId
                 from comments c
                 left join user u
                 on c.user_id = u.id

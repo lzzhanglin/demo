@@ -5,11 +5,12 @@
 <mapper  namespace = "com.spring.demo.mapper.ArticleMapper">
     <insert id="saveArticle"  parameterType="com.spring.demo.entity.Article"
                 useGeneratedKeys="true" keyProperty="articleId">
-            insert into article (title, content,user_id,category_id)
+            insert into article (title, content,user_id,category_id,comment_num)
             values (#{title,jdbcType=VARCHAR},
                     #{content,jdbcType=VARCHAR},
                     #{userId,jdbcType=BIGINT},
-                    #{categoryId,jdbcType=BIGINT})
+                    #{categoryId,jdbcType=BIGINT},
+                    0)
     </insert>
 
     <update id="updateArticle" parameterType="com.spring.demo.entity.Article"
@@ -83,7 +84,8 @@
         SELECT title,
         a.id articleId,
         u.username authorName,
-        create_time createTime
+        create_time createTime,
+        comment_num commentNum
         from
         article a
         left join user u
@@ -99,25 +101,27 @@
 
     </select>
 
+    <select id="getAllArticleList" parameterType="long" resultType="com.spring.demo.entity.Article">
+        select
+        a.id articleId,
+        title,
+        a.create_time createTime,
+        a.comment_num commentNum
+        from article a
+
+        where a.user_id = #{userId}
+        order by a.create_time desc
+
+    </select>
+
+    <update id="updateCommentNum" parameterType="long">
+        update article
+        set comment_num = comment_num + 1
+        where id = #{articleId}
+    </update>
+
 
 
 
 
 </mapper>
-        <!--SELECT-->
-        <!--title,-->
-        <!--id articleId,-->
-        <!--create_time createTime-->
-        <!--FROM-->
-        <!--article-->
-        <!--where-->
-
-
-        <!--user_id in-->
-        <!--<foreach collection="userIdList" item="userId"-->
-        <!--index="index" open="(" close=")" separator=",">-->
-        <!--                    #{userId}-->
-        <!--</foreach>-->
-        <!--</if>-->
-
-        <!--order by create_time desc-->

@@ -212,6 +212,7 @@ public class ArticleController {
         for (Comment c : commentList) {
             Long cId = c.getCommentId();
             logger.info(c.getComment());
+            logger.info(c.getUserId().toString());
         }
         request.setAttribute("userId",loginUserId);
         request.setAttribute("article",article);

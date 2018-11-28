@@ -70,9 +70,11 @@
 
             <!--<div class="page-header">-->
 
-            <td th:text="${comment.username}"  id="username">
-
+            <td th:value="${comment.username}"  id="username">
+                <a th:href="@{/user/show(userId=${comment.userId})}">
                     <p th:text="${comment.username}" ></p>
+
+                </a>
             </td>
             <td th:text="${comment.comment}"  id="comment1">
             </td>

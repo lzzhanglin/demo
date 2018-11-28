@@ -132,7 +132,7 @@ $("#replyBtn").click(function () {
 
             if (data.status == "success") {
                 swal({
-                    title: '发表成功！',
+                    title: '回复成功！',
                     type: "success",
                     timer: 1000,
                     showConfirmButton: false

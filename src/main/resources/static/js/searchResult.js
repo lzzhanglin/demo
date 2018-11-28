@@ -46,6 +46,13 @@ $('#userTable').bootstrapTable(
                 title:'用户名',
                 align:'center',
                 showSelectTitle:true,
+                formatter:function (value, row, index) {
+                    value='<a href="/user/show?userId='+row.userId+'"'+">"+value+"</a>";
+                    return value;
+                    // return [
+                    //     '<a href="/article/edit?articleId='+'+row.articleId+'+"></a>'
+                    // ].join("")
+                },
 
                 // visible:false,
                 /*               formatter:function(value,row,index){

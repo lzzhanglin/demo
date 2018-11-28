@@ -14,13 +14,17 @@
 <div th:include="navbar :: navbar"></div>
 
 <div class="container">
+    <div style="color: #00b4ef;text-align: center;font-size: 20px">
+        <p2 >这是首页哦 （●>∀<●）</p2>
 
+    </div>
 <input type="hidden" id="pageInfo" th:value="${pageInfo}">
     <table class="table table-striped" id="homeTable">
         <tr>
             <th>标题</th>
             <th>作者</th>
             <th>发表时间</th>
+            <th >评论</th>
         </tr>
 
         <tr th:each="article : ${pageInfo.list}">
@@ -39,6 +43,9 @@
             </td>
 
             <td th:text="${article.createTime}"  id="createTime">
+
+            </td>
+            <td th:text="${article.commentNum}"  id="commentNum" style="color: #00b4ef">
 
             </td>
             <!--</div>-->

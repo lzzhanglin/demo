@@ -24,5 +24,9 @@ public interface ArticleMapper {
 
     public List<Article> showArticleTitle(@Param("userIdList") List<Long> userIdList);
 
+    public List<Article> getAllArticleList(Long userId);
+
+    public int updateCommentNum(Long articleId);
+
 
 }

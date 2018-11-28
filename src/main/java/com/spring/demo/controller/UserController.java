@@ -1,8 +1,10 @@
 package com.spring.demo.controller;
 
+import com.spring.demo.entity.Article;
 import com.spring.demo.entity.Resp;
 import com.spring.demo.entity.SearchUser;
 import com.spring.demo.entity.User;
+import com.spring.demo.mapper.ArticleMapper;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.service.UserService;
 import com.spring.demo.service.serviceImpl.MyUserDetailService;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -37,6 +40,9 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ArticleMapper articleMapper;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -114,6 +120,18 @@ public class UserController {
         return user;
 
 
+    }
+
+    @RequestMapping("/show")
+    public String showUser(HttpServletRequest request) {
+        String uId = request.getParameter("userId");
+        if (Objects.equals(null, uId) || Objects.equals("", uId)) {
+            throw new IllegalArgumentException("userId为空");
+        }
+        Long userId = Long.valueOf(uId);
+        List<Article> articleList = articleMapper.getAllArticleList(userId);
+        request.setAttribute("articleList",articleList);
+        return "showUser";
     }
 
 }
