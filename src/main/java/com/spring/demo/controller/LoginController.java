@@ -1,15 +1,15 @@
 package com.spring.demo.controller;
 
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.spring.demo.entity.Article;
 import com.spring.demo.entity.Resp;
 import com.spring.demo.entity.User;
+import com.spring.demo.entity.VisitRecord;
 import com.spring.demo.mapper.UserMapper;
 import com.spring.demo.security.SecurityProperties;
 import com.spring.demo.service.ArticleService;
 import com.spring.demo.service.UserService;
+import com.spring.demo.service.VisitService;
 import com.spring.demo.service.serviceImpl.MyUserDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +39,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.InetAddress;
 import java.util.Objects;
 
 @Controller
@@ -50,6 +48,9 @@ public class LoginController {
 
     private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+
+    @Autowired
+    private VisitService visitService;
 
     @Autowired
     private ArticleService articleService;
@@ -108,9 +109,40 @@ public class LoginController {
     @RequestMapping("/login")
     public String toLogin(HttpServletRequest request) {
         String error = request.getParameter("error");
-        logger.info("密码是否错误：{}",error);
-
+        logger.info("访问web服务一次");
+        //获取访问的源IP地址
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+            if(ip.equals("127.0.0.1")){
+                //根据网卡取本机配置的IP
+                InetAddress inet=null;
+                try {
+                    inet = InetAddress.getLocalHost();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ip= inet.getHostAddress();
+            }
+        }
+        // 多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if(ip != null && ip.length() > 15){
+            if(ip.indexOf(",")>0){
+                ip = ip.substring(0,ip.indexOf(","));
+            }
+        }
+        VisitRecord visitRecord = new VisitRecord();
+        visitRecord.setIpAddr(ip);
+        visitService.addOrUpdateVisitRecord(visitRecord);
+        logger.info("ip地址为：{}", ip);
         if (Objects.equals("true", error)) {
+            logger.info("密码是否错误：{}",error);
 
             request.setAttribute("error",error);
         }

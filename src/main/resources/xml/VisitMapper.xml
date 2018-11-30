@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.demo.mapper.VisitMapper">
+
+    <insert id="addVisitRecord" parameterType="com.spring.demo.entity.VisitRecord">
+        insert into visit_record()
+        values (null,
+       #{ipAddr,jdbcType=VARCHAR},
+      1,
+       now())
+
+    </insert>
+
+    <update id="updateVisitFreq" parameterType="long">
+        update visit_record
+        set visit_freq = visit_freq  + 1,
+        last_visit_time = now()
+        where id = #{visitorId}
+    </update>
+
+    <select id="getVisitorId" parameterType="string" resultType="long">
+        select id from
+        visit_record
+        where ip_address = #{ipAddr}
+    </select>
+
+</mapper>

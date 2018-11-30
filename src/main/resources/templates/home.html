@@ -57,28 +57,27 @@
 
     <nav class="nav nav-pills pull-right" >
         <ul class="pagination" >
-            <li><a href="#">&laquo;</a></li>
+            <li><a href="#" style="color: #00b4ef;">&laquo;</a></li>
 
             <li>
-                <a th:if="${not isFirstPage}" th:href="@{${'/home'}(pageNum=${pageNum-1},pageSize=${pageSize})}">Previous</a>
-                <a th:if="${isFirstPage}" href="javascript:void(0);">Previous</a>
+                <a th:if="${not isFirstPage}" th:href="@{${'/home'}(pageNum=${pageNum-1},pageSize=${pageSize})}" style="color: #00b4ef;">Previous</a>
+                <a th:if="${isFirstPage}" href="javascript:void(0);" style="color: #00b4ef;">Previous</a>
             </li>
 
             <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
-                <a th:if="${pageNum eq pageNo}" href="javascript:void(0);">
+                <a th:if="${pageNum eq pageNo}" href="javascript:void(0);" style="color: black">
                     <span th:text="${pageNo}"></span>
                 </a>
-
-                <a th:if="${not (pageNum eq pageNo)}" th:href="@{${'/home'}(pageNum=${pageNo},pageSize=${pageSize})}">
+                <a th:if="${not (pageNum eq pageNo)}" th:href="@{${'/home'}(pageNum=${pageNo},pageSize=${pageSize})}"style="color: #00b4ef;">
                     <span th:text="${pageNo}"></span>
                 </a>
             </li>
             <li>
-                <a th:if="${not isLastPage}" th:href="@{${'/home'}(pageNum=${pageNum+1},pageSize=${pageSize})}">Next</a>
-                <a th:if="${isLastPage}" href="javascript:void(0);">Next</a>
+                <a th:if="${not isLastPage}" th:href="@{${'/home'}(pageNum=${pageNum+1},pageSize=${pageSize})}" style="color: #00b4ef;">Next</a>
+                <a th:if="${isLastPage}" href="javascript:void(0);" style="color: #00b4ef;">Next</a>
             </li>
 
-            <li><a href="#">&raquo;</a></li>
+            <li><a href="#" style="color: #00b4ef;">&raquo;</a></li>
         </ul>
     </nav>
 
